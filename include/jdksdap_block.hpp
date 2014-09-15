@@ -142,7 +142,6 @@ struct traits<block<T, Width, 1, 1> >
     static const size_t first_size = Width;
     static const size_t second_size = 1;
     static const size_t third_size = 1;
-
 };
 
 template <typename T, size_t Width, size_t Height>
@@ -165,7 +164,6 @@ struct traits<block<T, Width, Height, 1> >
     static const size_t first_size = Height;
     static const size_t second_size = Width;
     static const size_t third_size = 1;
-
 };
 
 /**
@@ -191,7 +189,6 @@ struct traits<rotated_width_block<T, Width, Height, Depth> >
     static const size_t first_size = Depth;
     static const size_t second_size = Width;
     static const size_t third_size = Height;
-
 };
 
 template <typename T, size_t Width>
@@ -214,7 +211,6 @@ struct traits<rotated_width_block<T, Width, 1, 1> >
     static const size_t first_size = Width;
     static const size_t second_size = 1;
     static const size_t third_size = 1;
-
 };
 
 template <typename T, size_t Width, size_t Height>
@@ -237,7 +233,6 @@ struct traits<rotated_width_block<T, Width, Height, 1> >
     static const size_t first_size = Width;
     static const size_t second_size = Height;
     static const size_t third_size = 1;
-
 };
 
 template <typename ContainerT>
@@ -251,7 +246,7 @@ auto rawget( ContainerT &c,
 }
 
 template <typename ContainerT>
-auto rawget( ContainerT  &c,
+auto rawget( ContainerT &c,
              std::size_t i1 = 0,
              std::size_t i2 = 0,
              std::size_t = 0,
@@ -395,7 +390,7 @@ auto get( ContainerT const &c,
 
 template <typename ContainerT>
 auto set( typename traits<ContainerT>::is_1dim_value_type const &v,
-          ContainerT const &c,
+          ContainerT &c,
           std::size_t w = 0,
           std::size_t = 0,
           std::size_t = 0,
@@ -406,7 +401,7 @@ auto set( typename traits<ContainerT>::is_1dim_value_type const &v,
 
 template <typename ContainerT>
 auto set( typename traits<ContainerT>::is_2dim_value_type const &v,
-          ContainerT const &c,
+          ContainerT &c,
           std::size_t w = 0,
           std::size_t h = 0,
           std::size_t = 0,
@@ -432,29 +427,29 @@ auto set( typename traits<ContainerT>::is_1dim_value_type const &v,
           std::size_t w = 0,
           std::size_t = 0,
           std::size_t = 0,
-          typename traits<ContainerT>::is_rotated_width_type * = 0 ) -> void
+          typename traits<ContainerT>::is_rotated_width_value_type * = 0 ) -> void
 {
     c.content[w] = v;
 }
 
 template <typename ContainerT>
 auto set( typename traits<ContainerT>::is_2dim_value_type const &v,
-          ContainerT  &c,
+          ContainerT &c,
           std::size_t w = 0,
           std::size_t h = 0,
           std::size_t = 0,
-          typename traits<ContainerT>::is_rotated_width_type * = 0 ) -> void
+          typename traits<ContainerT>::is_rotated_width_value_type * = 0 ) -> void
 {
     c.content[w][h] = v;
 }
 
 template <typename ContainerT>
 auto set( typename traits<ContainerT>::is_3dim_value_type const &v,
-          ContainerT  &c,
+          ContainerT &c,
           std::size_t w = 0,
           std::size_t h = 0,
           std::size_t d = 0,
-          typename traits<ContainerT>::is_rotated_width_type * = 0 ) -> void
+          typename traits<ContainerT>::is_rotated_width_value_type * = 0 ) -> void
 {
     c.content[d][w][h] = v;
 }
@@ -498,8 +493,8 @@ void apply_in_place( ContainerT &srcdest, Functor f, typename traits<ContainerT>
 
     for ( std::size_t a = 0; a < ContainerTraits::first_size; ++a )
     {
-        ValueType &v = rawget(srcdest,a);
-        v = f(v);
+        ValueType &v = rawget( srcdest, a );
+        v = f( v );
     }
 }
 
@@ -513,12 +508,11 @@ void apply_in_place( ContainerT &srcdest, Functor f, typename traits<ContainerT>
     {
         for ( std::size_t b = 0; b < ContainerTraits::second_size; ++b )
         {
-            ValueType &v = rawget(srcdest,a,b);
-            v = f(v);
+            ValueType &v = rawget( srcdest, a, b );
+            v = f( v );
         }
     }
 }
-
 
 template <typename ContainerT, typename Functor>
 void apply_in_place( ContainerT &srcdest, Functor f, typename traits<ContainerT>::is_3dim_value_type * = 0 )
@@ -532,8 +526,8 @@ void apply_in_place( ContainerT &srcdest, Functor f, typename traits<ContainerT>
         {
             for ( std::size_t c = 0; c < ContainerTraits::third_size; ++c )
             {
-                ValueType &v = rawget(srcdest,a,b,c);
-                v = f(v);
+                ValueType &v = rawget( srcdest, a, b, c );
+                v = f( v );
             }
         }
     }
@@ -545,7 +539,8 @@ auto rotate( OriginalContainerT const &b ) -> typename traits<OriginalContainerT
     typename traits<OriginalContainerT>::rotate_width_type result;
     apply( b,
            result,
-           []( typename OriginalContainerT::value_type v )
+           []( typename traits<OriginalContainerT>::value_type v )
     { return v; } );
+    return result;
 }
 }

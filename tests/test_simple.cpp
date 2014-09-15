@@ -32,17 +32,96 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "jdksdap.hpp"
 #include <iostream>
 
+template <typename T, size_t Width, size_t Height, size_t Depth>
+std::ostream &operator<<( std::ostream &ostr, jdksdap::block<T, Width, Height, Depth> const &v )
+{
+    ostr << "{ ";
+    for ( size_t w = 0; w < Width; ++w )
+    {
+        ostr << " {";
+        for ( size_t h = 0; h < Height; ++h )
+        {
+            ostr << " {";
+            for ( size_t d = 0; d < Depth; ++d )
+            {
+                T a = get( v, w, h, d );
+                std::cout << a << " ";
+            }
+            std::cout << "},";
+        }
+        std::cout << "}\n";
+    }
+    return ostr;
+}
+
+template <typename T, size_t Width, size_t Height, size_t Depth>
+std::ostream &operator<<( std::ostream &ostr, jdksdap::rotated_width_block<T, Width, Height, Depth> const &v )
+{
+    ostr << "{ ";
+    for ( size_t w = 0; w < Width; ++w )
+    {
+        ostr << " {";
+        for ( size_t h = 0; h < Height; ++h )
+        {
+            ostr << " {";
+            for ( size_t d = 0; d < Depth; ++d )
+            {
+                T a = get( v, w, h, d );
+                std::cout << a << " ";
+            }
+            std::cout << "},";
+        }
+        std::cout << "}\n";
+    }
+    return ostr;
+}
+
 int main()
 {
     using namespace jdksdap;
 
-    block<float,4,2,16> v1, v2, v3;
-    float c=1.0f;
+    block<float, 4, 2, 16> v1, v2, v3;
+    // float c=1.0f;
 
+    for ( size_t w = 0; w < 4; ++w )
+    {
+        for ( size_t h = 0; h < 2; ++h )
+        {
+            for ( size_t d = 0; d < 16; ++d )
+            {
+                set( 0.0f, v1, w, h, d );
+                set( static_cast<float>( w * 1000 + h * 100 + d ), v2, w, h, d );
+                set( 0.0f, v3, w, h, d );
+            }
+        }
+    }
+    std::cout << v2 << std::endl << std::endl;
+
+    {
+        float *p = &rawget( v2 );
+        for ( size_t i = 0; i < 4 * 2 * 16; ++i )
+        {
+            std::cout << *p++ << std::endl;
+        }
+    }
+
+
+    auto rv2 = rotate( v2 );
+    std::cout << rv2 << std::endl;
+    {
+        float *p = &rawget( rv2 );
+        for ( size_t i = 0; i < 4 * 2 * 16; ++i )
+        {
+            std::cout << *p++ << std::endl;
+        }
+    }
+
+#if 0
     apply_in_place( v1, [&](float ){ return c+=1.0f; } );
     apply_in_place( v2, [](float ){ return 1.0f; } );
     apply_in_place( v3, [](float ){ return 0.0f; } );
     apply( v1, v3, [](float f){return f*100.0;});
     apply_in_place( v3, [](float f){ std::cout << f << std::endl; return f; } );
+#endif
     return 0;
 }
