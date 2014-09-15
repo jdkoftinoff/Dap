@@ -31,4 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include "jdksdap_world.hpp"
-#include "jdksdap_traits.hpp"
+
+namespace jdksdap
+{
+}
