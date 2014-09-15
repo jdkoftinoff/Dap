@@ -45,6 +45,12 @@ struct block
 {
     using array = std::array<std::array<std::array<T, Width>, Height>, Depth>;
     array content;
+    static const size_t width = Width;
+    static const size_t height = Height;
+    static const size_t depth = Depth;
+    static const size_t first_size = Depth;
+    static const size_t second_size = Height;
+    static const size_t third_size = Width;
 };
 
 /**
@@ -55,6 +61,13 @@ struct block<T, Width, 1, 1>
 {
     using array = std::array<T, Width>;
     array content;
+
+    static const size_t width = Width;
+    static const size_t height = 1;
+    static const size_t depth = 1;
+    static const size_t first_size = 1;
+    static const size_t second_size = 1;
+    static const size_t third_size = Width;
 };
 
 /**
@@ -65,6 +78,13 @@ struct block<T, Width, Height, 1>
 {
     using array = std::array<std::array<T, Width>, Height>;
     array content;
+
+    static const size_t width = Width;
+    static const size_t height = Height;
+    static const size_t depth = 1;
+    static const size_t first_size = Height;
+    static const size_t second_size = Width;
+    static const size_t third_size = 1;
 };
 
 /**
@@ -75,6 +95,14 @@ struct rotated_width_block
 {
     using array = std::array<std::array<std::array<T, Height>, Width>, Depth>;
     array content;
+
+    using value_type = T;
+    static const size_t width = Width;
+    static const size_t height = Height;
+    static const size_t depth = Depth;
+    static const size_t first_size = Depth;
+    static const size_t second_size = Width;
+    static const size_t third_size = Height;
 };
 
 /**
@@ -85,16 +113,32 @@ struct rotated_width_block<T, Width, 1, 1>
 {
     using array = std::array<T, Width>;
     array content;
+
+    using value_type = T;
+    static const size_t width = Width;
+    static const size_t height = 1;
+    static const size_t depth = 1;
+    static const size_t first_size = Width;
+    static const size_t second_size = 1;
+    static const size_t third_size = 1;
 };
 
 /**
- * 2 dimensional array block indexed by Height and Width
+ * 2 dimensional rotated array block indexed by Height and Width
  */
 template <typename T, std::size_t Width, std::size_t Height>
 struct rotated_width_block<T, Width, Height, 1>
 {
     using array = std::array<std::array<T, Height>, Width>;
     array content;
+
+    using value_type = T;
+    static const size_t width = Width;
+    static const size_t height = Height;
+    static const size_t depth = 1;
+    static const size_t first_size = Width;
+    static const size_t second_size = Height;
+    static const size_t third_size = 1;
 };
 
 /**
@@ -297,7 +341,7 @@ auto rawget( ContainerT const &c,
 
 template <typename ContainerT>
 auto rawset( typename traits<ContainerT>::is_1dim_value_type const &v,
-             ContainerT const &c,
+             ContainerT &c,
              std::size_t i1 = 0,
              std::size_t = 0,
              std::size_t = 0 ) -> void
@@ -307,7 +351,7 @@ auto rawset( typename traits<ContainerT>::is_1dim_value_type const &v,
 
 template <typename ContainerT>
 auto rawset( typename traits<ContainerT>::is_2dim_value_type const &v,
-             ContainerT const &c,
+             ContainerT &c,
              std::size_t i1 = 0,
              std::size_t i2 = 0,
              std::size_t = 0 ) -> void
@@ -317,7 +361,7 @@ auto rawset( typename traits<ContainerT>::is_2dim_value_type const &v,
 
 template <typename ContainerT>
 auto rawset( typename traits<ContainerT>::is_3dim_value_type const &v,
-             ContainerT const &c,
+             ContainerT &c,
              std::size_t i1 = 0,
              std::size_t i2 = 0,
              std::size_t i3 = 0 ) -> void
@@ -454,12 +498,60 @@ auto set( typename traits<ContainerT>::is_3dim_value_type const &v,
     c.content[d][w][h] = v;
 }
 
+template <typename ContainerT, typename Functor>
+void apply( ContainerT &srcdest, Functor f, typename traits<ContainerT>::is_1dim_value_type * = 0 )
+{
+    using ContainerTraits = traits<ContainerT>;
+    using ValueType = typename ContainerTraits::value_type;
+
+    for ( std::size_t a = 0; a < ContainerTraits::first_size; ++a )
+    {
+        ValueType &v = rawget( srcdest, a );
+        v = f( v );
+    }
+}
+
+template <typename ContainerT, typename Functor>
+void apply( ContainerT &srcdest, Functor f, typename traits<ContainerT>::is_2dim_value_type * = 0 )
+{
+    using ContainerTraits = traits<ContainerT>;
+    using ValueType = typename ContainerTraits::value_type;
+
+    for ( std::size_t a = 0; a < ContainerTraits::first_size; ++a )
+    {
+        for ( std::size_t b = 0; b < ContainerTraits::second_size; ++b )
+        {
+            ValueType &v = rawget( srcdest, a, b );
+            v = f( v );
+        }
+    }
+}
+
+template <typename ContainerT, typename Functor>
+void apply( ContainerT &srcdest, Functor f, typename traits<ContainerT>::is_3dim_value_type * = 0 )
+{
+    using ContainerTraits = traits<ContainerT>;
+    using ValueType = typename ContainerTraits::value_type;
+
+    for ( std::size_t a = 0; a < ContainerTraits::first_size; ++a )
+    {
+        for ( std::size_t b = 0; b < ContainerTraits::second_size; ++b )
+        {
+            for ( std::size_t c = 0; c < ContainerTraits::third_size; ++c )
+            {
+                ValueType &v = rawget( srcdest, a, b, c );
+                v = f( v );
+            }
+        }
+    }
+}
+
 template <typename SourceContainerT, typename DestinationContainerT, typename Functor>
-void apply( SourceContainerT const &src,
+auto apply( SourceContainerT const &src,
             DestinationContainerT &dest,
             Functor f,
             typename traits<SourceContainerT>::value_type * = 0,
-            typename traits<DestinationContainerT>::value_type * = 0 )
+            typename traits<DestinationContainerT>::value_type * = 0 ) -> void
 {
     using SourceContainerTraits = traits<SourceContainerT>;
     using DestinationContainerTraits = traits<DestinationContainerT>;
@@ -485,49 +577,33 @@ void apply( SourceContainerT const &src,
     }
 }
 
-template <typename ContainerT, typename Functor>
-void apply_in_place( ContainerT &srcdest, Functor f, typename traits<ContainerT>::is_1dim_value_type * = 0 )
+template <typename Container1T, typename Container2T, typename ResultContainerT, typename Functor>
+auto apply( Container1T const &c1,
+            Container2T const &c2,
+            ResultContainerT &r,
+            Functor f,
+            typename traits<Container1T>::rotate_width_type * = 0,
+            typename traits<Container2T>::rotate_width_type * = 0,
+            typename traits<ResultContainerT>::rotate_width_type * = 0 ) -> void
 {
-    using ContainerTraits = traits<ContainerT>;
-    using ValueType = typename ContainerTraits::value_type;
+    using Container1Traits = traits<Container1T>;
+    using Container2Traits = traits<Container2T>;
+    using ResultContainerTraits = traits<ResultContainerT>;
+    using ValueType1 = typename Container1Traits::value_type;
+    using ValueType2 = typename Container2Traits::value_type;
+    using ValueTypeResult = typename ResultContainerTraits::value_type;
 
-    for ( std::size_t a = 0; a < ContainerTraits::first_size; ++a )
+    static_assert( Container1Traits::width == Container2Traits::width, "Width different between Source and Destination" );
+    static_assert( Container1Traits::height == Container2Traits::height, "Height different between Source and Destination" );
+    static_assert( Container1Traits::depth == Container2Traits::depth, "Depth different between Source and Destination" );
+
+    for ( std::size_t w = 0; w < ResultContainerTraits::width; ++w )
     {
-        ValueType &v = rawget( srcdest, a );
-        v = f( v );
-    }
-}
-
-template <typename ContainerT, typename Functor>
-void apply_in_place( ContainerT &srcdest, Functor f, typename traits<ContainerT>::is_2dim_value_type * = 0 )
-{
-    using ContainerTraits = traits<ContainerT>;
-    using ValueType = typename ContainerTraits::value_type;
-
-    for ( std::size_t a = 0; a < ContainerTraits::first_size; ++a )
-    {
-        for ( std::size_t b = 0; b < ContainerTraits::second_size; ++b )
+        for ( std::size_t h = 0; h < ResultContainerTraits::height; ++h )
         {
-            ValueType &v = rawget( srcdest, a, b );
-            v = f( v );
-        }
-    }
-}
-
-template <typename ContainerT, typename Functor>
-void apply_in_place( ContainerT &srcdest, Functor f, typename traits<ContainerT>::is_3dim_value_type * = 0 )
-{
-    using ContainerTraits = traits<ContainerT>;
-    using ValueType = typename ContainerTraits::value_type;
-
-    for ( std::size_t a = 0; a < ContainerTraits::first_size; ++a )
-    {
-        for ( std::size_t b = 0; b < ContainerTraits::second_size; ++b )
-        {
-            for ( std::size_t c = 0; c < ContainerTraits::third_size; ++c )
+            for ( std::size_t d = 0; d < ResultContainerTraits::depth; ++d )
             {
-                ValueType &v = rawget( srcdest, a, b, c );
-                v = f( v );
+                set( f( get( c1, w, h, d ), get( c2, w, h, d ) ), r, w, h, d );
             }
         }
     }
@@ -536,11 +612,100 @@ void apply_in_place( ContainerT &srcdest, Functor f, typename traits<ContainerT>
 template <typename OriginalContainerT>
 auto rotate( OriginalContainerT const &b ) -> typename traits<OriginalContainerT>::rotate_width_type
 {
-    typename traits<OriginalContainerT>::rotate_width_type result;
+    using OriginalContainerTraits = traits<OriginalContainerT>;
+    using ValueType = typename OriginalContainerTraits::value_type;
+    using ResultContainer = typename traits<OriginalContainerT>::rotate_width_type;
+
+    ResultContainer result;
+
     apply( b,
            result,
-           []( typename traits<OriginalContainerT>::value_type v )
+           []( ValueType v )
     { return v; } );
+
     return result;
 }
+
+template <std::size_t Width, std::size_t Height, std::size_t Depth, typename T>
+auto make_block( T elem ) -> block<T, Width, Height, Depth>
+{
+    using Container = block<T, Width, Height, Depth>;
+    Container r;
+
+    for ( std::size_t a = 0; a < Container::first_size; ++a )
+    {
+        for ( std::size_t b = 0; b < Container::second_size; ++b )
+        {
+            for ( std::size_t c = 0; c < Container::third_size; ++c )
+            {
+                rawset( elem, r, a, b, c );
+            }
+        }
+    }
+
+    return r;
+}
+
+template <typename T, std::size_t Width, std::size_t Height, std::size_t Depth, typename Functor>
+auto fill_block( Functor f ) -> block<T, Width, Height, Depth>
+{
+    using Container = block<T, Width, Height, Depth>;
+    Container r;
+
+    for ( std::size_t w = 0; w < Container::width; ++w )
+    {
+        for ( std::size_t h = 0; h < Container::height; ++h )
+        {
+            for ( std::size_t d = 0; d < Container::depth; ++d )
+            {
+                rawset( f(w,h,d), r, w, h, d );
+            }
+        }
+    }
+
+    return r;
+}
+
+
+
+template <std::size_t Width, std::size_t Height, std::size_t Depth, typename T>
+auto make_rotated_width_block( T elem ) -> rotated_width_block<T, Width, Height, Depth>
+{
+    using Container = rotated_width_block<T, Width, Height, Depth>;
+    Container r;
+
+    for ( std::size_t a = 0; a < Container::first_size; ++a )
+    {
+        for ( std::size_t b = 0; b < Container::second_size; ++b )
+        {
+            for ( std::size_t c = 0; c < Container::third_size; ++c )
+            {
+                rawset( elem, r, a, b, c );
+            }
+        }
+    }
+
+    return r;
+}
+
+template <typename T, std::size_t Width, std::size_t Height, std::size_t Depth, typename Functor>
+auto fill_rotated_width_block( Functor f ) -> rotated_width_block<T, Width, Height, Depth>
+{
+    using Container = rotated_width_block<T, Width, Height, Depth>;
+    Container r;
+
+    for ( std::size_t h = 0; h < Container::height; ++h )
+    {
+        for ( std::size_t w = 0; w < Container::width; ++w )
+        {
+            for ( std::size_t d = 0; d < Container::depth; ++d )
+            {
+                rawset( f(w,h,d), r, w, h, d );
+            }
+        }
+    }
+
+    return r;
+}
+
 }

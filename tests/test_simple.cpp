@@ -80,17 +80,25 @@ int main()
 {
     using namespace jdksdap;
 
-    block<float, 4, 2, 16> v1, v2, v3;
-    // float c=1.0f;
+    auto v1 = make_block<4, 2, 3>( 1.0f );
+    auto v2 = make_block<4, 2, 3>( 2.0f );
+    auto v3 = make_block<4, 2, 3>( 3.0f );
+    auto rv4 = make_rotated_width_block<4,2,3>(1.0f);
+    auto rv5 = fill_rotated_width_block<float,4,2,3>( [](size_t w,size_t h,size_t d){ return (w * 1.0f) + (h * 10.0f) + (d * 1000.0f); } );
 
-    for ( size_t w = 0; w < 4; ++w )
+    std::cout << v1 << std::endl;
+    std::cout << v2 << std::endl;
+    std::cout << rv4 << std::endl;
+    std::cout << rv5 << std::endl;
+
+    for ( size_t w = 0; w < v1.width; ++w )
     {
-        for ( size_t h = 0; h < 2; ++h )
+        for ( size_t h = 0; h < v1.height; ++h )
         {
-            for ( size_t d = 0; d < 16; ++d )
+            for ( size_t d = 0; d < v1.depth; ++d )
             {
                 set( 0.0f, v1, w, h, d );
-                set( static_cast<float>( w * 1000 + h * 100 + d ), v2, w, h, d );
+                set( static_cast<float>( w * 1 + h * 10 + d * 1000 ), v2, w, h, d );
                 set( 0.0f, v3, w, h, d );
             }
         }
@@ -105,7 +113,6 @@ int main()
         }
     }
 
-
     auto rv2 = rotate( v2 );
     std::cout << rv2 << std::endl;
     {
@@ -115,6 +122,14 @@ int main()
             std::cout << *p++ << std::endl;
         }
     }
+
+    apply( v2,
+           rv2,
+           v1,
+           []( float a, float b )
+    { return a + b + 1.0f; } );
+
+    std::cout << v1 << std::endl;
 
 #if 0
     apply_in_place( v1, [&](float ){ return c+=1.0f; } );
