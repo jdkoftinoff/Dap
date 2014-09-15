@@ -36,3 +36,18 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <valarray>
 #include <array>
 #include <vector>
+#include <cmath>
+#include <cstdint>
+#include <complex>
+#include <functional>
+#include <initializer_list>
+#include <memory>
+#include <utility>
+#include <numeric>
+#include <iterator>
+#include <algorithm>
+#include <atomic>
+
+#ifndef JDKSDAP_CACHELINESIZE
+#define JDKSDAP_CACHELINESIZE ( 64 )
+#endif

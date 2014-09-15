@@ -30,8 +30,19 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "jdksdap_world.hpp"
 #include "jdksdap.hpp"
+#include <iostream>
 
 int main()
 {
-    return 1;
+    using namespace jdksdap;
+
+    block<float,4,2,16> v1, v2, v3;
+    float c=1.0f;
+
+    apply_in_place( v1, [&](float ){ return c+=1.0f; } );
+    apply_in_place( v2, [](float ){ return 1.0f; } );
+    apply_in_place( v3, [](float ){ return 0.0f; } );
+    apply( v1, v3, [](float f){return f*100.0;});
+    apply_in_place( v3, [](float f){ std::cout << f << std::endl; return f; } );
+    return 0;
 }
