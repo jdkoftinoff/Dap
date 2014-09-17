@@ -45,11 +45,11 @@ std::ostream &operator<<( std::ostream &ostr, jdksdap::block<T, Width, Height, D
             for ( size_t d = 0; d < Depth; ++d )
             {
                 T a = get( v, w, h, d );
-                std::cout << a << " ";
+                std::cout << a << ( d < Depth - 1 ? ", " : " " );
             }
-            std::cout << "},";
+            std::cout << ( h < Height - 1 ? "}, " : "} " );
         }
-        std::cout << "}\n";
+        std::cout << ( w < Width - 1 ? "},\n" : "}\n" );
     }
     return ostr;
 }
@@ -67,11 +67,11 @@ std::ostream &operator<<( std::ostream &ostr, jdksdap::rotated_width_block<T, Wi
             for ( size_t d = 0; d < Depth; ++d )
             {
                 T a = get( v, w, h, d );
-                std::cout << a << " ";
+                std::cout << a << ( d < Depth - 1 ? ", " : " " );
             }
-            std::cout << "},";
+            std::cout << ( h < Height - 1 ? "}, " : "} " );
         }
-        std::cout << "}\n";
+        std::cout << ( w < Width - 1 ? "},\n" : "}\n" );
     }
     return ostr;
 }
@@ -80,17 +80,24 @@ int main()
 {
     using namespace jdksdap;
 
-    auto v1 = make_block<4, 2, 3>( 1.0f );
-    auto v2 = make_block<4, 2, 3>( 2.0f );
-    auto v3 = make_block<4, 2, 3>( 3.0f );
-    auto rv4 = make_rotated_width_block<4,2,3>(1.0f);
-    auto rv5 = fill_rotated_width_block<float,4,2,3>( [](size_t w,size_t h,size_t d){ return (w * 1.0f) + (h * 10.0f) + (d * 1000.0f); } );
+    auto v1 = make_block<4, 2, 1>( 1.0f );
+    auto v2 = make_block<4, 2, 1>( 2.0f );
+    auto v3 = make_block<4, 2, 1>( 3.0f );
+    auto v4 = fill_block<float, 4, 2, 1>( []( size_t w, size_t h, size_t d )
+    { return 4.0f; } );
+    auto rv4 = make_rotated_width_block<4, 2, 3>( 1.0f );
+    auto rv5 = fill_rotated_width_block<float, 4, 2, 3>( []( size_t w, size_t h, size_t d )
+    { return ( w * 1.0f ) + ( h * 10.0f ) + ( d * 1000.0f ); } );
 
-    std::cout << v1 << std::endl;
-    std::cout << v2 << std::endl;
-    std::cout << rv4 << std::endl;
-    std::cout << rv5 << std::endl;
+    std::cout << "v1:\n" << v1 << std::endl;
+    std::cout << "v2:\n" << v2 << std::endl;
+    std::cout << "v3:\n" << v3 << std::endl;
+    std::cout << "v4:\n" << v4 << std::endl;
 
+    std::cout << "rv4:\n" << rv4 << std::endl;
+    std::cout << "rv5:\n" << rv5 << std::endl;
+
+#if 0
     for ( size_t w = 0; w < v1.width; ++w )
     {
         for ( size_t h = 0; h < v1.height; ++h )
@@ -130,6 +137,7 @@ int main()
     { return a + b + 1.0f; } );
 
     std::cout << v1 << std::endl;
+#endif
 
 #if 0
     apply_in_place( v1, [&](float ){ return c+=1.0f; } );

@@ -296,7 +296,7 @@ auto rawget( ContainerT &c,
              std::size_t = 0,
              typename traits<ContainerT>::is_2dim_container_type * = 0 ) -> typename traits<ContainerT>::value_type &
 {
-    return c.content[i2][i1];
+    return c.content[i1][i2];
 }
 
 template <typename ContainerT>
@@ -306,7 +306,7 @@ auto rawget( ContainerT &c,
              std::size_t i3 = 0,
              typename traits<ContainerT>::is_3dim_container_type * = 0 ) -> typename traits<ContainerT>::value_type &
 {
-    return c.content[i3][i2][i1];
+    return c.content[i1][i2][i3];
 }
 
 template <typename ContainerT>
@@ -326,7 +326,7 @@ auto rawget( ContainerT const &c,
              std::size_t = 0,
              typename traits<ContainerT>::is_2dim_container_type * = 0 ) -> typename traits<ContainerT>::value_type
 {
-    return c.content[i2][i1];
+    return c.content[i1][i2];
 }
 
 template <typename ContainerT>
@@ -336,11 +336,11 @@ auto rawget( ContainerT const &c,
              std::size_t i3 = 0,
              typename traits<ContainerT>::is_3dim_container_type * = 0 ) -> typename traits<ContainerT>::value_type
 {
-    return c.content[i3][i2][i1];
+    return c.content[i1][i2][i3];
 }
 
 template <typename ContainerT>
-auto rawset( typename traits<ContainerT>::is_1dim_value_type const &v,
+auto rawset( typename traits<ContainerT>::is_1dim_value_type v,
              ContainerT &c,
              std::size_t i1 = 0,
              std::size_t = 0,
@@ -350,23 +350,23 @@ auto rawset( typename traits<ContainerT>::is_1dim_value_type const &v,
 }
 
 template <typename ContainerT>
-auto rawset( typename traits<ContainerT>::is_2dim_value_type const &v,
+auto rawset( typename traits<ContainerT>::is_2dim_value_type v,
              ContainerT &c,
              std::size_t i1 = 0,
              std::size_t i2 = 0,
              std::size_t = 0 ) -> void
 {
-    c.content[i2][i1] = v;
+    c.content[i1][i2] = v;
 }
 
 template <typename ContainerT>
-auto rawset( typename traits<ContainerT>::is_3dim_value_type const &v,
+auto rawset( typename traits<ContainerT>::is_3dim_value_type v,
              ContainerT &c,
              std::size_t i1 = 0,
              std::size_t i2 = 0,
              std::size_t i3 = 0 ) -> void
 {
-    c.content[i3][i2][i1] = v;
+    c.content[i1][i2][i3] = v;
 }
 
 template <typename ContainerT>
@@ -433,7 +433,7 @@ auto get( ContainerT const &c,
 }
 
 template <typename ContainerT>
-auto set( typename traits<ContainerT>::is_1dim_value_type const &v,
+auto set( typename traits<ContainerT>::is_1dim_value_type v,
           ContainerT &c,
           std::size_t w = 0,
           std::size_t = 0,
@@ -444,7 +444,7 @@ auto set( typename traits<ContainerT>::is_1dim_value_type const &v,
 }
 
 template <typename ContainerT>
-auto set( typename traits<ContainerT>::is_2dim_value_type const &v,
+auto set( typename traits<ContainerT>::is_2dim_value_type v,
           ContainerT &c,
           std::size_t w = 0,
           std::size_t h = 0,
@@ -455,7 +455,7 @@ auto set( typename traits<ContainerT>::is_2dim_value_type const &v,
 }
 
 template <typename ContainerT>
-auto set( typename traits<ContainerT>::is_3dim_value_type const &v,
+auto set( typename traits<ContainerT>::is_3dim_value_type v,
           ContainerT &c,
           std::size_t w = 0,
           std::size_t h = 0,
@@ -466,7 +466,7 @@ auto set( typename traits<ContainerT>::is_3dim_value_type const &v,
 }
 
 template <typename ContainerT>
-auto set( typename traits<ContainerT>::is_1dim_value_type const &v,
+auto set( typename traits<ContainerT>::is_1dim_value_type v,
           ContainerT &c,
           std::size_t w = 0,
           std::size_t = 0,
@@ -477,7 +477,7 @@ auto set( typename traits<ContainerT>::is_1dim_value_type const &v,
 }
 
 template <typename ContainerT>
-auto set( typename traits<ContainerT>::is_2dim_value_type const &v,
+auto set( typename traits<ContainerT>::is_2dim_value_type v,
           ContainerT &c,
           std::size_t w = 0,
           std::size_t h = 0,
@@ -488,7 +488,7 @@ auto set( typename traits<ContainerT>::is_2dim_value_type const &v,
 }
 
 template <typename ContainerT>
-auto set( typename traits<ContainerT>::is_3dim_value_type const &v,
+auto set( typename traits<ContainerT>::is_3dim_value_type v,
           ContainerT &c,
           std::size_t w = 0,
           std::size_t h = 0,
@@ -658,15 +658,13 @@ auto fill_block( Functor f ) -> block<T, Width, Height, Depth>
         {
             for ( std::size_t d = 0; d < Container::depth; ++d )
             {
-                rawset( f(w,h,d), r, w, h, d );
+                set( f( w, h, d ), r, w, h, d );
             }
         }
     }
 
     return r;
 }
-
-
 
 template <std::size_t Width, std::size_t Height, std::size_t Depth, typename T>
 auto make_rotated_width_block( T elem ) -> rotated_width_block<T, Width, Height, Depth>
@@ -700,12 +698,11 @@ auto fill_rotated_width_block( Functor f ) -> rotated_width_block<T, Width, Heig
         {
             for ( std::size_t d = 0; d < Container::depth; ++d )
             {
-                rawset( f(w,h,d), r, w, h, d );
+                set( f( w, h, d ), r, w, h, d );
             }
         }
     }
 
     return r;
 }
-
 }
