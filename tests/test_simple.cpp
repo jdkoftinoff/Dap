@@ -31,11 +31,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "jdksdap_world.hpp"
 #include "jdksdap.hpp"
 #include <iostream>
+#include <iomanip>
 
-template <typename T, size_t Width, size_t Height, size_t Depth>
-std::ostream &operator<<( std::ostream &ostr, jdksdap::block<T, Width, Height, Depth> const &v )
+template <typename T, typename TwistType, size_t Width, size_t Height, size_t Depth>
+std::ostream &operator<<( std::ostream &ostr, jdksdap::block<T, TwistType, Width, Height, Depth> const &v )
 {
-    ostr << "{ ";
+    ostr << "{\n";
     for ( size_t w = 0; w < Width; ++w )
     {
         ostr << " {";
@@ -44,58 +45,93 @@ std::ostream &operator<<( std::ostream &ostr, jdksdap::block<T, Width, Height, D
             ostr << " {";
             for ( size_t d = 0; d < Depth; ++d )
             {
-                T a = get( v, w, h, d );
-                std::cout << a << ( d < Depth - 1 ? ", " : " " );
+                T a = jdksdap::get( v, w, h, d );
+                std::cout << "(" << w << "," << h << "," << d << "):";
+                std::cout << std::setw( 4 ) << a << ( d < Depth - 1 ? ", " : " " );
             }
             std::cout << ( h < Height - 1 ? "}, " : "} " );
         }
         std::cout << ( w < Width - 1 ? "},\n" : "}\n" );
+    }
+    std::size_t num = Width * Height * Depth;
+    T const *p = &v.content[0][0][0];
+    for ( std::size_t i = 0; i < num; ++i )
+    {
+        std::cout << *++p << "\n";
     }
     return ostr;
 }
 
-template <typename T, size_t Width, size_t Height, size_t Depth>
-std::ostream &operator<<( std::ostream &ostr, jdksdap::rotated_width_block<T, Width, Height, Depth> const &v )
+template <typename TwistType>
+void dissect_twist( std::string const &name )
 {
-    ostr << "{ ";
-    for ( size_t w = 0; w < Width; ++w )
-    {
-        ostr << " {";
-        for ( size_t h = 0; h < Height; ++h )
-        {
-            ostr << " {";
-            for ( size_t d = 0; d < Depth; ++d )
-            {
-                T a = get( v, w, h, d );
-                std::cout << a << ( d < Depth - 1 ? ", " : " " );
-            }
-            std::cout << ( h < Height - 1 ? "}, " : "} " );
-        }
-        std::cout << ( w < Width - 1 ? "},\n" : "}\n" );
-    }
-    return ostr;
+    std::cout << name << ":\n";
+    std::cout << "width_index: " << TwistType::width_index << "\n";
+    std::cout << "height_index: " << TwistType::height_index << "\n";
+    std::cout << "depth_index: " << TwistType::depth_index << "\n";
+    std::cout << "raw_index0_map: " << TwistType::raw_index0_map << "\n";
+    std::cout << "raw_index1_map: " << TwistType::raw_index1_map << "\n";
+    std::cout << "raw_index2_map: " << TwistType::raw_index2_map << "\n";
+
+    std::cout << "\n";
 }
 
 int main()
 {
     using namespace jdksdap;
 
-    auto v1 = make_block<4, 2, 1>( 1.0f );
-    auto v2 = make_block<4, 2, 1>( 2.0f );
-    auto v3 = make_block<4, 2, 1>( 3.0f );
-    auto v4 = fill_block<float, 4, 2, 1>( []( size_t w, size_t h, size_t d )
-    { return 4.0f; } );
-    auto rv4 = make_rotated_width_block<4, 2, 3>( 1.0f );
-    auto rv5 = fill_rotated_width_block<float, 4, 2, 3>( []( size_t w, size_t h, size_t d )
-    { return ( w * 1.0f ) + ( h * 10.0f ) + ( d * 1000.0f ); } );
+    dissect_twist<twist0>( "twist0" );
+    dissect_twist<twist1>( "twist1" );
+    dissect_twist<twist2>( "twist2" );
+    dissect_twist<twist3>( "twist3" );
+    dissect_twist<twist4>( "twist4" );
+    dissect_twist<twist5>( "twist5" );
 
+    auto v1 = make_block<twist0, 4, 3, 2>( 1.0f );
     std::cout << "v1:\n" << v1 << std::endl;
+    auto v2 = make_block<twist0, 4, 3, 2>( 2.0f );
     std::cout << "v2:\n" << v2 << std::endl;
+    auto v3 = make_block<twist0, 4, 3, 2>( 3.0f );
     std::cout << "v3:\n" << v3 << std::endl;
-    std::cout << "v4:\n" << v4 << std::endl;
+    auto v3_a2 = make_block<twist2, 4, 3, 2>( 3.0f );
+    std::cout << "v3_a2:\n" << v3_a2 << std::endl;
 
-    std::cout << "rv4:\n" << rv4 << std::endl;
-    std::cout << "rv5:\n" << rv5 << std::endl;
+    auto v4_a0 = fill_block<float, twist0, 4, 3, 2>( []( size_t w, size_t h, size_t d )
+    { return w * 1 + h * 10 + d * 100; } );
+    std::cout << "v4_a0:\n" << v4_a0 << std::endl;
+
+    auto v4_a1 = fill_block<float, twist1, 4, 3, 2>( []( size_t w, size_t h, size_t d )
+    { return w * 1 + h * 10 + d * 100; } );
+    std::cout << "v4_a1:\n" << v4_a1 << std::endl;
+
+    auto v4_a2 = fill_block<float, twist2, 4, 3, 2>( []( size_t w, size_t h, size_t d )
+    { return w * 1 + h * 10 + d * 100; } );
+    std::cout << "v4_a2:\n" << v4_a2 << std::endl;
+
+    auto v4_a3 = fill_block<float, twist3, 4, 3, 2>( []( size_t w, size_t h, size_t d )
+    { return w * 1 + h * 10 + d * 100; } );
+    std::cout << "v4_a3:\n" << v4_a3 << std::endl;
+
+    auto v4_a4 = fill_block<float, twist4, 4, 3, 2>( []( size_t w, size_t h, size_t d )
+    { return w * 1 + h * 10 + d * 100; } );
+    std::cout << "v4_a4:\n" << v4_a4 << std::endl;
+
+    auto v4_a5 = fill_block<float, twist5, 4, 3, 2>( []( size_t w, size_t h, size_t d )
+    { return w * 1 + h * 10 + d * 100; } );
+    std::cout << "v4_a5:\n" << v4_a5 << std::endl;
+
+    auto rv4_0 = twist_block<0>( v4_a0 );
+    auto rv4_1 = twist_block<1>( v4_a0 );
+    auto rv4_2 = twist_block<2>( v4_a0 );
+    auto rv4_3 = twist_block<3>( v4_a0 );
+    auto rv4_4 = twist_block<4>( v4_a0 );
+    auto rv4_5 = twist_block<5>( v4_a0 );
+    std::cout << "rv4_0:\n" << rv4_0 << std::endl;
+    std::cout << "rv4_1:\n" << rv4_1 << std::endl;
+    std::cout << "rv4_2:\n" << rv4_2 << std::endl;
+    std::cout << "rv4_3:\n" << rv4_3 << std::endl;
+    std::cout << "rv4_4:\n" << rv4_4 << std::endl;
+    std::cout << "rv4_5:\n" << rv4_5 << std::endl;
 
 #if 0
     for ( size_t w = 0; w < v1.width; ++w )

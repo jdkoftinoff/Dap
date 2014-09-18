@@ -38,15 +38,5 @@ namespace jdksdap
 template <typename ContainerT>
 struct traits
 {
-    /* requirements:
-     * using container_type = ...;
-     * using value_type = ...;
-     * static const size_t width = ...;
-     * static const size_t height = ...;
-     * static const size_t depth = ...;
-     * static const bool rotated_width = ...;
-     * static const bool rotated_height = ...;
-     * static const bool rotated_depth = ...;
-     */
 };
 }
