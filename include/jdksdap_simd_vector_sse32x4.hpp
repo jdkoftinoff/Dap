@@ -35,7 +35,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #if defined( __SSE__ )
 #include "xmmintrin.h"
 
-namespace jdksdap
+namespace JDKSDap
 {
 
 template <>
@@ -537,6 +537,5 @@ class JDKSDAP_SIMD_ALIGN SIMD_Vector<float, 4>
         return r;
     }
 };
-
 }
 #endif

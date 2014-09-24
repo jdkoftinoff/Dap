@@ -35,7 +35,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #if defined( __SSE__ )
 #include "xmmintrin.h"
 
-namespace jdksdap
+namespace JDKSDap
 {
 
 template <>
