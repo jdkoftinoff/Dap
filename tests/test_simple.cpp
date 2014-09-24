@@ -87,6 +87,11 @@ int main()
     dissect_twist<twist4>( "twist4" );
     dissect_twist<twist5>( "twist5" );
 
+    SIMD_Vector<float,4> simd1;
+    splat( simd1, 123.0f );
+
+    auto vv4 = make_block<twist0, 4, 3, 2>( simd1 );
+    std::cout << "vv4:\n" << vv4 << std::endl;
     auto v1 = make_block<twist0, 4, 3, 2>( 1.0f );
     std::cout << "v1:\n" << v1 << std::endl;
     auto v2 = make_block<twist0, 4, 3, 2>( 2.0f );

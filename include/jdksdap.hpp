@@ -35,3 +35,5 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "jdksdap_vec.hpp"
 #include "jdksdap_math.hpp"
 #include "jdksdap_block.hpp"
+#include "jdksdap_simd.hpp"
+
