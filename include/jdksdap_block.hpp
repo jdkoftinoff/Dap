@@ -33,6 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "jdksdap_world.hpp"
 #include "jdksdap_vec.hpp"
 #include "jdksdap_traits.hpp"
+#include "jdksdap_twist.hpp"
 
 namespace jdksdap
 {
@@ -40,507 +41,126 @@ namespace jdksdap
 /**
  * 3 dimensional array block indexed by Width, Height, and Depth
  */
-template <typename T, std::size_t Width, std::size_t Height = 1, std::size_t Depth = 1>
+template <typename T, typename TwistType, std::size_t Width, std::size_t Height = 1, std::size_t Depth = 1>
 struct block
 {
-    using array = std::array<std::array<std::array<T, Width>, Height>, Depth>;
-    array content;
-    static const size_t width = Width;
-    static const size_t height = Height;
-    static const size_t depth = Depth;
-    static const size_t first_size = Depth;
-    static const size_t second_size = Height;
-    static const size_t third_size = Width;
-};
-
-/**
- * 1 dimensional array block indexed by Width
- */
-template <typename T, std::size_t Width>
-struct block<T, Width, 1, 1>
-{
-    using array = std::array<T, Width>;
-    array content;
-
-    static const size_t width = Width;
-    static const size_t height = 1;
-    static const size_t depth = 1;
-    static const size_t first_size = 1;
-    static const size_t second_size = 1;
-    static const size_t third_size = Width;
-};
-
-/**
- * 2 dimensional array block indexed by Width and Height
- */
-template <typename T, std::size_t Width, std::size_t Height>
-struct block<T, Width, Height, 1>
-{
-    using array = std::array<std::array<T, Width>, Height>;
-    array content;
-
-    static const size_t width = Width;
-    static const size_t height = Height;
-    static const size_t depth = 1;
-    static const size_t first_size = Height;
-    static const size_t second_size = Width;
-    static const size_t third_size = 1;
-};
-
-/**
- * 3 dimensional array block indexed by Height, Width, and Depth
- */
-template <typename T, std::size_t Width, std::size_t Height = 1, std::size_t Depth = 1>
-struct rotated_width_block
-{
-    using array = std::array<std::array<std::array<T, Height>, Width>, Depth>;
-    array content;
-
+    using twist_type = TwistType;
     using value_type = T;
-    static const size_t width = Width;
-    static const size_t height = Height;
-    static const size_t depth = Depth;
-    static const size_t first_size = Depth;
-    static const size_t second_size = Width;
-    static const size_t third_size = Height;
-};
+    using twist_array_type = twist_array<value_type, twist_type, Width, Height, Depth>;
+    using array_type = typename twist_array_type::type;
 
-/**
- * 1 dimensional array block indexed by Width
- */
-template <typename T, std::size_t Width>
-struct rotated_width_block<T, Width, 1, 1>
-{
-    using array = std::array<T, Width>;
-    array content;
-
-    using value_type = T;
-    static const size_t width = Width;
-    static const size_t height = 1;
-    static const size_t depth = 1;
-    static const size_t first_size = Width;
-    static const size_t second_size = 1;
-    static const size_t third_size = 1;
-};
-
-/**
- * 2 dimensional rotated array block indexed by Height and Width
- */
-template <typename T, std::size_t Width, std::size_t Height>
-struct rotated_width_block<T, Width, Height, 1>
-{
-    using array = std::array<std::array<T, Height>, Width>;
-    array content;
-
-    using value_type = T;
-    static const size_t width = Width;
-    static const size_t height = Height;
-    static const size_t depth = 1;
-    static const size_t first_size = Width;
-    static const size_t second_size = Height;
-    static const size_t third_size = 1;
+    array_type content;
 };
 
 /**
  * Traits for unrotated array block
  */
-template <typename T, size_t Width, size_t Height, size_t Depth>
-struct traits<block<T, Width, Height, Depth> >
+template <typename T, typename TwistType, size_t Width, size_t Height, size_t Depth>
+struct traits<block<T, TwistType, Width, Height, Depth> >
 {
-    using container_type = block<T, Width, Height, Depth>;
     using value_type = T;
-    using rotate_width_type = rotated_width_block<T, Width, Height, Depth>;
-
-    using is_unrotated_container_type = container_type;
-    using is_unrotated_value_type = value_type;
-
-    using is_3dim_container_type = container_type;
-    using is_3dim_value_type = value_type;
+    using twist_type = TwistType;
+    using container_type = block<T, twist_type, Width, Height, Depth>;
+    using twist_array_type = typename container_type::twist_array_type;
+    using array_type = typename container_type::array_type;
 
     static const size_t width = Width;
     static const size_t height = Height;
     static const size_t depth = Depth;
 
-    static const size_t first_size = Depth;
-    static const size_t second_size = Height;
-    static const size_t third_size = Width;
-};
-
-template <typename T, size_t Width>
-struct traits<block<T, Width, 1, 1> >
-{
-    using container_type = block<T, Width, 1, 1>;
-    using value_type = T;
-    using rotate_width_type = rotated_width_block<T, Width, 1, 1>;
-
-    using is_unrotated_container_type = container_type;
-    using is_unrotated_value_type = value_type;
-
-    using is_1dim_container_type = container_type;
-    using is_1dim_value_type = value_type;
-
-    static const size_t width = Width;
-    static const size_t height = 1;
-    static const size_t depth = 1;
-
-    static const size_t first_size = Width;
-    static const size_t second_size = 1;
-    static const size_t third_size = 1;
-};
-
-template <typename T, size_t Width, size_t Height>
-struct traits<block<T, Width, Height, 1> >
-{
-    using container_type = block<T, Width, Height, 1>;
-    using value_type = T;
-    using rotate_width_type = rotated_width_block<T, Width, Height, 1>;
-
-    using is_unrotated_container_type = container_type;
-    using is_unrotated_value_type = value_type;
-
-    using is_2dim_container_type = container_type;
-    using is_2dim_value_type = value_type;
-
-    static const size_t width = Width;
-    static const size_t height = Height;
-    static const size_t depth = 1;
-
-    static const size_t first_size = Height;
-    static const size_t second_size = Width;
-    static const size_t third_size = 1;
-};
-
-/**
- * Traits for rotated array block
- */
-template <typename T, size_t Width, size_t Height, size_t Depth>
-struct traits<rotated_width_block<T, Width, Height, Depth> >
-{
-    using container_type = rotated_width_block<T, Width, Height, Depth>;
-    using rotate_width_type = block<T, Width, Height, Depth>;
-    using value_type = T;
-
-    using is_rotated_width_container_type = container_type;
-    using is_rotated_width_value_type = value_type;
-
-    using is_3dim_container_type = container_type;
-    using is_3dim_value_type = value_type;
-
-    static const size_t width = Width;
-    static const size_t height = Height;
-    static const size_t depth = Depth;
-
-    static const size_t first_size = Depth;
-    static const size_t second_size = Width;
-    static const size_t third_size = Height;
-};
-
-template <typename T, size_t Width>
-struct traits<rotated_width_block<T, Width, 1, 1> >
-{
-    using container_type = rotated_width_block<T, Width, 1, 1>;
-    using rotate_width_type = block<T, Width, 1, 1>;
-    using value_type = T;
-
-    using is_rotated_width_container_type = container_type;
-    using is_rotated_width_value_type = value_type;
-
-    using is_1dim_container_type = container_type;
-    using is_1dim_value_type = value_type;
-
-    static const size_t width = Width;
-    static const size_t height = 1;
-    static const size_t depth = 1;
-
-    static const size_t first_size = Width;
-    static const size_t second_size = 1;
-    static const size_t third_size = 1;
-};
-
-template <typename T, size_t Width, size_t Height>
-struct traits<rotated_width_block<T, Width, Height, 1> >
-{
-    using container_type = rotated_width_block<T, Width, Height, 1>;
-    using rotate_width_type = block<T, Width, Height, 1>;
-    using value_type = T;
-
-    using is_rotated_width_container_type = container_type;
-    using is_rotated_width_value_type = value_type;
-
-    using is_2dim_container_type = container_type;
-    using is_2dim_value_type = value_type;
-
-    static const size_t width = Width;
-    static const size_t height = Height;
-    static const size_t depth = 1;
-
-    static const size_t first_size = Width;
-    static const size_t second_size = Height;
-    static const size_t third_size = 1;
+    static const size_t raw_index0_size = twist_array_type::raw_index0_size;
+    static const size_t raw_index1_size = twist_array_type::raw_index1_size;
+    static const size_t raw_index2_size = twist_array_type::raw_index2_size;
 };
 
 template <typename ContainerT>
-auto rawget( ContainerT &c,
-             std::size_t i1 = 0,
-             std::size_t = 0,
-             std::size_t = 0,
-             typename traits<ContainerT>::is_1dim_container_type * = 0 ) -> typename traits<ContainerT>::value_type &
+auto get( ContainerT &c,
+          std::size_t width_pos = 0,
+          std::size_t height_pos = 0,
+          std::size_t depth_pos = 0,
+          typename traits<ContainerT>::twist_array_type * = 0 ) -> typename traits<ContainerT>::value_type &
 {
-    return c.content[i1];
+    using twist_array_type = typename traits<ContainerT>::twist_array_type;
+    return twist_array_type::get( c.content, width_pos, height_pos, depth_pos );
+}
+
+template <typename ContainerT>
+auto get( ContainerT const &c,
+          std::size_t width_pos = 0,
+          std::size_t height_pos = 0,
+          std::size_t depth_pos = 0,
+          typename traits<ContainerT>::twist_array_type * = 0 ) -> typename traits<ContainerT>::value_type
+{
+    using twist_array_type = typename traits<ContainerT>::twist_array_type;
+    return twist_array_type::get( c.content, width_pos, height_pos, depth_pos );
+}
+
+template <typename ContainerT>
+auto set( ContainerT &c,
+          typename traits<ContainerT>::value_type v,
+          std::size_t width_pos = 0,
+          std::size_t height_pos = 0,
+          std::size_t depth_pos = 0,
+          typename traits<ContainerT>::twist_array_type * = 0 ) -> void
+{
+    using twist_array_type = typename traits<ContainerT>::twist_array_type;
+    twist_array_type::set( c.content, v, width_pos, height_pos, depth_pos );
 }
 
 template <typename ContainerT>
 auto rawget( ContainerT &c,
+             std::size_t i0 = 0,
              std::size_t i1 = 0,
              std::size_t i2 = 0,
-             std::size_t = 0,
-             typename traits<ContainerT>::is_2dim_container_type * = 0 ) -> typename traits<ContainerT>::value_type &
+             typename traits<ContainerT>::twist_array_type * = 0 ) -> typename traits<ContainerT>::value_type &
 {
-    return c.content[i1][i2];
-}
-
-template <typename ContainerT>
-auto rawget( ContainerT &c,
-             std::size_t i1 = 0,
-             std::size_t i2 = 0,
-             std::size_t i3 = 0,
-             typename traits<ContainerT>::is_3dim_container_type * = 0 ) -> typename traits<ContainerT>::value_type &
-{
-    return c.content[i1][i2][i3];
+    using twist_array_type = typename traits<ContainerT>::twist_array_type;
+    return twist_array_type::rawget( c.content, i0, i1, i2 );
 }
 
 template <typename ContainerT>
 auto rawget( ContainerT const &c,
-             std::size_t i1 = 0,
-             std::size_t = 0,
-             std::size_t = 0,
-             typename traits<ContainerT>::is_1dim_container_type * = 0 ) -> typename traits<ContainerT>::value_type
-{
-    return c.content[i1];
-}
-
-template <typename ContainerT>
-auto rawget( ContainerT const &c,
+             std::size_t i0 = 0,
              std::size_t i1 = 0,
              std::size_t i2 = 0,
-             std::size_t = 0,
-             typename traits<ContainerT>::is_2dim_container_type * = 0 ) -> typename traits<ContainerT>::value_type
+             typename traits<ContainerT>::twist_array_type * = 0 ) -> typename traits<ContainerT>::value_type &
 {
-    return c.content[i1][i2];
+    using twist_array_type = typename traits<ContainerT>::twist_array_type;
+    return twist_array_type::rawget( c.content, i0, i1, i2 );
 }
 
 template <typename ContainerT>
-auto rawget( ContainerT const &c,
+auto rawset( ContainerT &c,
+             typename traits<ContainerT>::value_type v,
+             std::size_t i0 = 0,
              std::size_t i1 = 0,
              std::size_t i2 = 0,
-             std::size_t i3 = 0,
-             typename traits<ContainerT>::is_3dim_container_type * = 0 ) -> typename traits<ContainerT>::value_type
+             typename traits<ContainerT>::twist_array_type * = 0 ) -> void
 {
-    return c.content[i1][i2][i3];
-}
-
-template <typename ContainerT>
-auto rawset( typename traits<ContainerT>::is_1dim_value_type v,
-             ContainerT &c,
-             std::size_t i1 = 0,
-             std::size_t = 0,
-             std::size_t = 0 ) -> void
-{
-    c.content[i1] = v;
-}
-
-template <typename ContainerT>
-auto rawset( typename traits<ContainerT>::is_2dim_value_type v,
-             ContainerT &c,
-             std::size_t i1 = 0,
-             std::size_t i2 = 0,
-             std::size_t = 0 ) -> void
-{
-    c.content[i1][i2] = v;
-}
-
-template <typename ContainerT>
-auto rawset( typename traits<ContainerT>::is_3dim_value_type v,
-             ContainerT &c,
-             std::size_t i1 = 0,
-             std::size_t i2 = 0,
-             std::size_t i3 = 0 ) -> void
-{
-    c.content[i1][i2][i3] = v;
-}
-
-template <typename ContainerT>
-auto get( ContainerT const &c,
-          std::size_t w = 0,
-          std::size_t = 0,
-          std::size_t = 0,
-          typename traits<ContainerT>::is_1dim_container_type * = 0 ) -> typename traits<ContainerT>::is_unrotated_value_type
-{
-    return c.content[w];
-}
-
-template <typename ContainerT>
-auto get( ContainerT const &c,
-          std::size_t w = 0,
-          std::size_t h = 0,
-          std::size_t = 0,
-          typename traits<ContainerT>::is_2dim_container_type * = 0 ) -> typename traits<ContainerT>::is_unrotated_value_type
-{
-    return c.content[h][w];
-}
-
-template <typename ContainerT>
-auto get( ContainerT const &c,
-          std::size_t w = 0,
-          std::size_t h = 0,
-          std::size_t d = 0,
-          typename traits<ContainerT>::is_3dim_container_type * = 0 ) -> typename traits<ContainerT>::is_unrotated_value_type
-{
-    return c.content[d][h][w];
-}
-
-template <typename ContainerT>
-auto get( ContainerT const &c,
-          std::size_t w = 0,
-          std::size_t = 0,
-          std::size_t = 0,
-          typename traits<ContainerT>::is_1dim_container_type * = 0 ) -> typename traits
-    <ContainerT>::is_rotated_width_value_type
-{
-    return c.content[w];
-}
-
-template <typename ContainerT>
-auto get( ContainerT const &c,
-          std::size_t w = 0,
-          std::size_t h = 0,
-          std::size_t = 0,
-          typename traits<ContainerT>::is_2dim_container_type * = 0 ) -> typename traits
-    <ContainerT>::is_rotated_width_value_type
-{
-    return c.content[w][h];
-}
-
-template <typename ContainerT>
-auto get( ContainerT const &c,
-          std::size_t w = 0,
-          std::size_t h = 0,
-          std::size_t d = 0,
-          typename traits<ContainerT>::is_3dim_container_type * = 0 ) -> typename traits
-    <ContainerT>::is_rotated_width_value_type
-{
-    return c.content[d][w][h];
-}
-
-template <typename ContainerT>
-auto set( typename traits<ContainerT>::is_1dim_value_type v,
-          ContainerT &c,
-          std::size_t w = 0,
-          std::size_t = 0,
-          std::size_t = 0,
-          typename traits<ContainerT>::is_unrotated_value_type * = 0 ) -> void
-{
-    c.content[w] = v;
-}
-
-template <typename ContainerT>
-auto set( typename traits<ContainerT>::is_2dim_value_type v,
-          ContainerT &c,
-          std::size_t w = 0,
-          std::size_t h = 0,
-          std::size_t = 0,
-          typename traits<ContainerT>::is_unrotated_value_type * = 0 ) -> void
-{
-    c.content[h][w] = v;
-}
-
-template <typename ContainerT>
-auto set( typename traits<ContainerT>::is_3dim_value_type v,
-          ContainerT &c,
-          std::size_t w = 0,
-          std::size_t h = 0,
-          std::size_t d = 0,
-          typename traits<ContainerT>::is_unrotated_value_type * = 0 ) -> void
-{
-    c.content[d][h][w] = v;
-}
-
-template <typename ContainerT>
-auto set( typename traits<ContainerT>::is_1dim_value_type v,
-          ContainerT &c,
-          std::size_t w = 0,
-          std::size_t = 0,
-          std::size_t = 0,
-          typename traits<ContainerT>::is_rotated_width_value_type * = 0 ) -> void
-{
-    c.content[w] = v;
-}
-
-template <typename ContainerT>
-auto set( typename traits<ContainerT>::is_2dim_value_type v,
-          ContainerT &c,
-          std::size_t w = 0,
-          std::size_t h = 0,
-          std::size_t = 0,
-          typename traits<ContainerT>::is_rotated_width_value_type * = 0 ) -> void
-{
-    c.content[w][h] = v;
-}
-
-template <typename ContainerT>
-auto set( typename traits<ContainerT>::is_3dim_value_type v,
-          ContainerT &c,
-          std::size_t w = 0,
-          std::size_t h = 0,
-          std::size_t d = 0,
-          typename traits<ContainerT>::is_rotated_width_value_type * = 0 ) -> void
-{
-    c.content[d][w][h] = v;
+    using twist_array_type = typename traits<ContainerT>::twist_array_type;
+    twist_array_type::rawset( c.content, v, i0, i1, i2 );
 }
 
 template <typename ContainerT, typename Functor>
-void apply( ContainerT &srcdest, Functor f, typename traits<ContainerT>::is_1dim_value_type * = 0 )
+void apply( ContainerT &srcdest, Functor f, typename traits<ContainerT>::twist_array_type * = 0 )
 {
     using ContainerTraits = traits<ContainerT>;
+    using ContainerTwistType = typename ContainerTraits::twist_type;
     using ValueType = typename ContainerTraits::value_type;
 
-    for ( std::size_t a = 0; a < ContainerTraits::first_size; ++a )
+    for ( std::size_t a = 0; a < ContainerTraits::raw_index0_size; ++a )
     {
-        ValueType &v = rawget( srcdest, a );
-        v = f( v );
-    }
-}
-
-template <typename ContainerT, typename Functor>
-void apply( ContainerT &srcdest, Functor f, typename traits<ContainerT>::is_2dim_value_type * = 0 )
-{
-    using ContainerTraits = traits<ContainerT>;
-    using ValueType = typename ContainerTraits::value_type;
-
-    for ( std::size_t a = 0; a < ContainerTraits::first_size; ++a )
-    {
-        for ( std::size_t b = 0; b < ContainerTraits::second_size; ++b )
+        for ( std::size_t b = 0; b < ContainerTraits::raw_index1_size; ++b )
         {
-            ValueType &v = rawget( srcdest, a, b );
-            v = f( v );
-        }
-    }
-}
-
-template <typename ContainerT, typename Functor>
-void apply( ContainerT &srcdest, Functor f, typename traits<ContainerT>::is_3dim_value_type * = 0 )
-{
-    using ContainerTraits = traits<ContainerT>;
-    using ValueType = typename ContainerTraits::value_type;
-
-    for ( std::size_t a = 0; a < ContainerTraits::first_size; ++a )
-    {
-        for ( std::size_t b = 0; b < ContainerTraits::second_size; ++b )
-        {
-            for ( std::size_t c = 0; c < ContainerTraits::third_size; ++c )
+            for ( std::size_t c = 0; c < ContainerTraits::raw_index2_size; ++c )
             {
-                ValueType &v = rawget( srcdest, a, b, c );
-                v = f( v );
+                auto pos = std::make_tuple( a, b, c );
+                std::size_t w = ContainerTwistType::width_pos_from( pos );
+                std::size_t h = ContainerTwistType::height_pos_from( pos );
+                std::size_t d = ContainerTwistType::depth_pos_from( pos );
+
+                ValueType &v = rawget( srcdest.content, w, h, d );
+                v = f( v, w, h, d );
             }
         }
     }
@@ -550,11 +170,12 @@ template <typename SourceContainerT, typename DestinationContainerT, typename Fu
 auto apply( SourceContainerT const &src,
             DestinationContainerT &dest,
             Functor f,
-            typename traits<SourceContainerT>::value_type * = 0,
-            typename traits<DestinationContainerT>::value_type * = 0 ) -> void
+            typename traits<SourceContainerT>::twist_array_type * = 0,
+            typename traits<DestinationContainerT>::twist_array_type * = 0 ) -> void
 {
     using SourceContainerTraits = traits<SourceContainerT>;
     using DestinationContainerTraits = traits<DestinationContainerT>;
+    using DestinationContainerTwistType = typename DestinationContainerTraits::twist_type;
     using SourceValueType = typename SourceContainerTraits::value_type;
     using DestinationValueType = typename DestinationContainerTraits::value_type;
 
@@ -565,13 +186,19 @@ auto apply( SourceContainerT const &src,
     static_assert( SourceContainerTraits::depth == DestinationContainerTraits::depth,
                    "Depth different between Source and Destination" );
 
-    for ( std::size_t w = 0; w < DestinationContainerTraits::width; ++w )
+    for ( std::size_t a = 0; a < DestinationContainerTraits::raw_index0_size; ++a )
     {
-        for ( std::size_t h = 0; h < DestinationContainerTraits::height; ++h )
+        for ( std::size_t b = 0; b < DestinationContainerTraits::raw_index1_size; ++b )
         {
-            for ( std::size_t d = 0; d < DestinationContainerTraits::depth; ++d )
+            for ( std::size_t c = 0; c < DestinationContainerTraits::raw_index2_size; ++c )
             {
-                set( f( get( src, w, h, d ) ), dest, w, h, d );
+                auto pos = std::make_tuple( a, b, c );
+                std::size_t w = DestinationContainerTwistType::width_pos_from( pos );
+                std::size_t h = DestinationContainerTwistType::height_pos_from( pos );
+                std::size_t d = DestinationContainerTwistType::depth_pos_from( pos );
+
+                DestinationValueType v = f( get( src.content, w, h, d ), w, h, d );
+                rawset( dest.content, v, w, h, d );
             }
         }
     }
@@ -582,13 +209,14 @@ auto apply( Container1T const &c1,
             Container2T const &c2,
             ResultContainerT &r,
             Functor f,
-            typename traits<Container1T>::rotate_width_type * = 0,
-            typename traits<Container2T>::rotate_width_type * = 0,
-            typename traits<ResultContainerT>::rotate_width_type * = 0 ) -> void
+            typename traits<Container1T>::twist_array_type * = 0,
+            typename traits<Container2T>::twist_array_type * = 0,
+            typename traits<ResultContainerT>::twist_array_type * = 0 ) -> void
 {
     using Container1Traits = traits<Container1T>;
     using Container2Traits = traits<Container2T>;
     using ResultContainerTraits = traits<ResultContainerT>;
+    using ResultContainerTwistType = typename ResultContainerTraits::twist_type;
     using ValueType1 = typename Container1Traits::value_type;
     using ValueType2 = typename Container2Traits::value_type;
     using ValueTypeResult = typename ResultContainerTraits::value_type;
@@ -597,48 +225,38 @@ auto apply( Container1T const &c1,
     static_assert( Container1Traits::height == Container2Traits::height, "Height different between Source and Destination" );
     static_assert( Container1Traits::depth == Container2Traits::depth, "Depth different between Source and Destination" );
 
-    for ( std::size_t w = 0; w < ResultContainerTraits::width; ++w )
+    for ( std::size_t a = 0; a < ResultContainerTraits::raw_index0_size; ++a )
     {
-        for ( std::size_t h = 0; h < ResultContainerTraits::height; ++h )
+        for ( std::size_t b = 0; b < ResultContainerTraits::raw_index1_size; ++b )
         {
-            for ( std::size_t d = 0; d < ResultContainerTraits::depth; ++d )
+            for ( std::size_t c = 0; c < ResultContainerTraits::raw_index2_size; ++c )
             {
-                set( f( get( c1, w, h, d ), get( c2, w, h, d ) ), r, w, h, d );
+                auto pos = std::make_tuple( a, b, c );
+                std::size_t w = ResultContainerTwistType::width_pos_from( pos );
+                std::size_t h = ResultContainerTwistType::height_pos_from( pos );
+                std::size_t d = ResultContainerTwistType::depth_pos_from( pos );
+
+                ValueTypeResult v = f( get( c1.content, w, h, d ), get( c2.content, w, h, d ), w, h, d );
+                rawset( r.content, v, w, h, d );
             }
         }
     }
 }
 
-template <typename OriginalContainerT>
-auto rotate( OriginalContainerT const &b ) -> typename traits<OriginalContainerT>::rotate_width_type
+template <typename TwistType, std::size_t Width, std::size_t Height, std::size_t Depth, typename T>
+auto make_block( T elem ) -> block<T, TwistType, Width, Height, Depth>
 {
-    using OriginalContainerTraits = traits<OriginalContainerT>;
-    using ValueType = typename OriginalContainerTraits::value_type;
-    using ResultContainer = typename traits<OriginalContainerT>::rotate_width_type;
-
-    ResultContainer result;
-
-    apply( b,
-           result,
-           []( ValueType v )
-    { return v; } );
-
-    return result;
-}
-
-template <std::size_t Width, std::size_t Height, std::size_t Depth, typename T>
-auto make_block( T elem ) -> block<T, Width, Height, Depth>
-{
-    using Container = block<T, Width, Height, Depth>;
+    using Container = block<T, TwistType, Width, Height, Depth>;
+    using ContainerTraits = traits<Container>;
     Container r;
 
-    for ( std::size_t a = 0; a < Container::first_size; ++a )
+    for ( std::size_t a = 0; a < ContainerTraits::raw_index0_size; ++a )
     {
-        for ( std::size_t b = 0; b < Container::second_size; ++b )
+        for ( std::size_t b = 0; b < ContainerTraits::raw_index1_size; ++b )
         {
-            for ( std::size_t c = 0; c < Container::third_size; ++c )
+            for ( std::size_t c = 0; c < ContainerTraits::raw_index2_size; ++c )
             {
-                rawset( elem, r, a, b, c );
+                rawset( r, elem, a, b, c );
             }
         }
     }
@@ -646,19 +264,26 @@ auto make_block( T elem ) -> block<T, Width, Height, Depth>
     return r;
 }
 
-template <typename T, std::size_t Width, std::size_t Height, std::size_t Depth, typename Functor>
-auto fill_block( Functor f ) -> block<T, Width, Height, Depth>
+template <typename T, typename TwistType, std::size_t Width, std::size_t Height, std::size_t Depth, typename Functor>
+auto fill_block( Functor f ) -> block<T, TwistType, Width, Height, Depth>
 {
-    using Container = block<T, Width, Height, Depth>;
+    using Container = block<T, TwistType, Width, Height, Depth>;
+    using ContainerTraits = traits<Container>;
+    using ContainerTwistType = typename Container::twist_type;
     Container r;
 
-    for ( std::size_t w = 0; w < Container::width; ++w )
+    for ( std::size_t a = 0; a < ContainerTraits::raw_index0_size; ++a )
     {
-        for ( std::size_t h = 0; h < Container::height; ++h )
+        for ( std::size_t b = 0; b < ContainerTraits::raw_index1_size; ++b )
         {
-            for ( std::size_t d = 0; d < Container::depth; ++d )
+            for ( std::size_t c = 0; c < ContainerTraits::raw_index2_size; ++c )
             {
-                set( f( w, h, d ), r, w, h, d );
+                auto pos = std::make_tuple( a, b, c );
+                std::size_t w = ContainerTwistType::width_pos_from( pos );
+                std::size_t h = ContainerTwistType::height_pos_from( pos );
+                std::size_t d = ContainerTwistType::depth_pos_from( pos );
+
+                rawset( r, f( w, h, d ), a, b, c );
             }
         }
     }
@@ -666,39 +291,38 @@ auto fill_block( Functor f ) -> block<T, Width, Height, Depth>
     return r;
 }
 
-template <std::size_t Width, std::size_t Height, std::size_t Depth, typename T>
-auto make_rotated_width_block( T elem ) -> rotated_width_block<T, Width, Height, Depth>
+template <int TwistAmount, typename InputContainerType>
+auto twist_block( InputContainerType const &input )
+    -> block<typename traits<InputContainerType>::value_type,
+             typename twister<typename InputContainerType::twist_type, TwistAmount>::output_twist,
+             traits<InputContainerType>::width,
+             traits<InputContainerType>::height,
+             traits<InputContainerType>::depth>
 {
-    using Container = rotated_width_block<T, Width, Height, Depth>;
-    Container r;
+    using InputContainerTwistType = typename InputContainerType::twist_type;
+    using InputContainerTraits = traits<InputContainerType>;
+    using OutputContainerType = block<typename traits<InputContainerType>::value_type,
+                                      typename twister<typename InputContainerType::twist_type, TwistAmount>::output_twist,
+                                      InputContainerTraits::width,
+                                      InputContainerTraits::height,
+                                      InputContainerTraits::depth>;
+    using OutputContainerTraits = traits<OutputContainerType>;
+    using OutputContainerTwistType = typename OutputContainerType::twist_type;
 
-    for ( std::size_t a = 0; a < Container::first_size; ++a )
+    OutputContainerType r;
+
+    for ( std::size_t a = 0; a < OutputContainerTraits::raw_index0_size; ++a )
     {
-        for ( std::size_t b = 0; b < Container::second_size; ++b )
+        for ( std::size_t b = 0; b < OutputContainerTraits::raw_index1_size; ++b )
         {
-            for ( std::size_t c = 0; c < Container::third_size; ++c )
+            for ( std::size_t c = 0; c < OutputContainerTraits::raw_index2_size; ++c )
             {
-                rawset( elem, r, a, b, c );
-            }
-        }
-    }
+                auto pos = std::make_tuple( a, b, c );
+                std::size_t w = InputContainerTwistType::width_pos_from( pos );
+                std::size_t h = InputContainerTwistType::height_pos_from( pos );
+                std::size_t d = InputContainerTwistType::depth_pos_from( pos );
 
-    return r;
-}
-
-template <typename T, std::size_t Width, std::size_t Height, std::size_t Depth, typename Functor>
-auto fill_rotated_width_block( Functor f ) -> rotated_width_block<T, Width, Height, Depth>
-{
-    using Container = rotated_width_block<T, Width, Height, Depth>;
-    Container r;
-
-    for ( std::size_t h = 0; h < Container::height; ++h )
-    {
-        for ( std::size_t w = 0; w < Container::width; ++w )
-        {
-            for ( std::size_t d = 0; d < Container::depth; ++d )
-            {
-                set( f( w, h, d ), r, w, h, d );
+                rawset( r, get( input, w, h, d ), a, b, c );
             }
         }
     }
