@@ -33,7 +33,7 @@
 #include "jdksdap_world.hpp"
 #include <array>
 
-namespace jdksdap
+namespace JDKSDap
 {
 
 template <std::size_t WidthIndex, std::size_t HeightIndex, std::size_t DepthIndex>

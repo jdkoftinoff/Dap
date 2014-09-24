@@ -35,7 +35,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "jdksdap_traits.hpp"
 #include "jdksdap_twist.hpp"
 
-namespace jdksdap
+namespace JDKSDap
 {
 
 /**
