@@ -30,19 +30,19 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "jdksdap_world.hpp"
+#include "Dap_world.hpp"
 
-#define JDKSDAP_SIMD_ALIGN alignas( 32 )
+#define Dap_SIMD_ALIGN alignas( 32 )
 
-namespace JDKSDap
+namespace Dap
 {
 
 template <typename T, size_t N>
-class JDKSDAP_SIMD_ALIGN SIMD_Vector;
+class Dap_SIMD_ALIGN SIMD_Vector;
 template <typename T, size_t N>
-class JDKSDAP_SIMD_ALIGN SIMD_VectorRef;
+class Dap_SIMD_ALIGN SIMD_VectorRef;
 template <typename T, size_t N>
-class JDKSDAP_SIMD_ALIGN SIMD_VectorConstRef;
+class Dap_SIMD_ALIGN SIMD_VectorConstRef;
 
 /** \addtogroup simd_splat splat */
 /**@{*/
@@ -299,7 +299,7 @@ using std::sin;
 using std::cos;
 
 template <typename T, size_t N>
-class JDKSDAP_SIMD_ALIGN SIMD_Vector
+class Dap_SIMD_ALIGN SIMD_Vector
 {
   public:
     /// The type of the vector
@@ -830,7 +830,7 @@ class JDKSDAP_SIMD_ALIGN SIMD_Vector
 };
 
 template <typename T, size_t N>
-class JDKSDAP_SIMD_ALIGN SIMD_VectorRef
+class Dap_SIMD_ALIGN SIMD_VectorRef
 {
   public:
     /// The type of the vector
@@ -1342,7 +1342,7 @@ class JDKSDAP_SIMD_ALIGN SIMD_VectorRef
 };
 
 template <typename T, size_t N>
-class JDKSDAP_SIMD_ALIGN SIMD_VectorConstRef
+class Dap_SIMD_ALIGN SIMD_VectorConstRef
 {
   public:
     /// The type of the vector

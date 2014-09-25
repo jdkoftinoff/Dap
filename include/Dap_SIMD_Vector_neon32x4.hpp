@@ -30,16 +30,16 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "jdksdap_simd_vector.hpp"
+#include "Dap_SIMD_Vector.hpp"
 
 #if defined( __ARM_NEON__ )
 #include <arm_neon.h>
 
-namespace jdksdap
+namespace Dap
 {
 
 template <>
-class JDKSDAP_SIMD_ALIGN SIMD_Vector<float, 4>
+class Dap_SIMD_ALIGN SIMD_Vector<float, 4>
 {
   public:
     typedef SIMD_Vector<float, 4> simd_type;

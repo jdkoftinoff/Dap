@@ -1,5 +1,3 @@
-#pragma once
-
 /*
 Copyright (c) 2014, Jeff Koftinoff <jeffk@jdkoftinoff.com> and J.D. Koftinoff Software, Ltd.
 All rights reserved.
@@ -30,18 +28,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "jdksdap_simd_vector.hpp"
+#include "Dap_world.hpp"
+#include "Dap_vec.hpp"
 
-#if defined( __ARM_NEON__ )
-#include "jdksdap_simd_vector_neon32x4.hpp"
-#endif
-
-#if defined( __SSE2__ )
-#include "jdksdap_simd_vector_sse32x4.hpp"
-#include "jdksdap_simd_vector_sse64x2.hpp"
-#endif
-
-#if defined( __AVX__ )
-#include "jdksdap_simd_vector_avx32x8.hpp"
-#include "jdksdap_simd_vector_avx64x4.hpp"
-#endif
+const char *Dap_vec_file = __FILE__;

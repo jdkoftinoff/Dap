@@ -28,7 +28,6 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "jdksdap_world.hpp"
-#include "jdksdap_simd.hpp"
+#include "Dap_world.hpp"
 
-const char *jdksdap_simd_file = __FILE__;
+const char *Dap_world_file = __FILE__;

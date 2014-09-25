@@ -7,21 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BF55C21919CA745B00F61FCA /* jdksdap.hpp in Headers */ = {isa = PBXBuildFile; fileRef = BF55C21219CA745B00F61FCA /* jdksdap.hpp */; };
-		BF55C21A19CA745B00F61FCA /* jdksdap_block.hpp in Headers */ = {isa = PBXBuildFile; fileRef = BF55C21319CA745B00F61FCA /* jdksdap_block.hpp */; };
-		BF55C21B19CA745B00F61FCA /* jdksdap_math.hpp in Headers */ = {isa = PBXBuildFile; fileRef = BF55C21419CA745B00F61FCA /* jdksdap_math.hpp */; };
-		BF55C21C19CA745B00F61FCA /* jdksdap_traits.hpp in Headers */ = {isa = PBXBuildFile; fileRef = BF55C21519CA745B00F61FCA /* jdksdap_traits.hpp */; };
-		BF55C21D19CA745B00F61FCA /* jdksdap_twist.hpp in Headers */ = {isa = PBXBuildFile; fileRef = BF55C21619CA745B00F61FCA /* jdksdap_twist.hpp */; };
-		BF55C21E19CA745B00F61FCA /* jdksdap_vec.hpp in Headers */ = {isa = PBXBuildFile; fileRef = BF55C21719CA745B00F61FCA /* jdksdap_vec.hpp */; };
-		BF55C21F19CA745B00F61FCA /* jdksdap_world.hpp in Headers */ = {isa = PBXBuildFile; fileRef = BF55C21819CA745B00F61FCA /* jdksdap_world.hpp */; };
-		BF55C22819CA746300F61FCA /* jdksdap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF55C22119CA746300F61FCA /* jdksdap.cpp */; };
-		BF55C22919CA746300F61FCA /* jdksdap_block.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF55C22219CA746300F61FCA /* jdksdap_block.cpp */; };
-		BF55C22A19CA746300F61FCA /* jdksdap_math.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF55C22319CA746300F61FCA /* jdksdap_math.cpp */; };
-		BF55C22B19CA746300F61FCA /* jdksdap_traits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF55C22419CA746300F61FCA /* jdksdap_traits.cpp */; };
-		BF55C22C19CA746300F61FCA /* jdksdap_twist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF55C22519CA746300F61FCA /* jdksdap_twist.cpp */; };
-		BF55C22D19CA746300F61FCA /* jdksdap_vec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF55C22619CA746300F61FCA /* jdksdap_vec.cpp */; };
-		BF55C22E19CA746300F61FCA /* jdksdap_world.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF55C22719CA746300F61FCA /* jdksdap_world.cpp */; };
+		BF55C21919CA745B00F61FCA /* Dap.hpp in Headers */ = {isa = PBXBuildFile; fileRef = BF55C21219CA745B00F61FCA /* Dap.hpp */; };
+		BF55C21A19CA745B00F61FCA /* Dap_Block.hpp in Headers */ = {isa = PBXBuildFile; fileRef = BF55C21319CA745B00F61FCA /* Dap_Block.hpp */; };
+		BF55C21B19CA745B00F61FCA /* Dap_Math.hpp in Headers */ = {isa = PBXBuildFile; fileRef = BF55C21419CA745B00F61FCA /* Dap_Math.hpp */; };
+		BF55C21C19CA745B00F61FCA /* Dap_Traits.hpp in Headers */ = {isa = PBXBuildFile; fileRef = BF55C21519CA745B00F61FCA /* Dap_Traits.hpp */; };
+		BF55C21D19CA745B00F61FCA /* Dap_Twist.hpp in Headers */ = {isa = PBXBuildFile; fileRef = BF55C21619CA745B00F61FCA /* Dap_Twist.hpp */; };
+		BF55C21E19CA745B00F61FCA /* Dap_Vec.hpp in Headers */ = {isa = PBXBuildFile; fileRef = BF55C21719CA745B00F61FCA /* Dap_Vec.hpp */; };
+		BF55C21F19CA745B00F61FCA /* Dap_world.hpp in Headers */ = {isa = PBXBuildFile; fileRef = BF55C21819CA745B00F61FCA /* Dap_world.hpp */; };
+		BF55C22819CA746300F61FCA /* Dap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF55C22119CA746300F61FCA /* Dap.cpp */; };
+		BF55C22919CA746300F61FCA /* Dap_Block.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF55C22219CA746300F61FCA /* Dap_Block.cpp */; };
+		BF55C22A19CA746300F61FCA /* Dap_Math.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF55C22319CA746300F61FCA /* Dap_Math.cpp */; };
+		BF55C22B19CA746300F61FCA /* Dap_Traits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF55C22419CA746300F61FCA /* Dap_Traits.cpp */; };
+		BF55C22C19CA746300F61FCA /* Dap_Twist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF55C22519CA746300F61FCA /* Dap_Twist.cpp */; };
+		BF55C22D19CA746300F61FCA /* Dap_Vec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF55C22619CA746300F61FCA /* Dap_Vec.cpp */; };
+		BF55C22E19CA746300F61FCA /* Dap_world.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF55C22719CA746300F61FCA /* Dap_world.cpp */; };
 		BF55C23119CA747000F61FCA /* test_simple.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF55C23019CA747000F61FCA /* test_simple.cpp */; };
+		BF7293C819D464AA0007C9B0 /* Dap_SIMD_Vector_avx32x8.hpp in Headers */ = {isa = PBXBuildFile; fileRef = BF7293C119D464AA0007C9B0 /* Dap_SIMD_Vector_avx32x8.hpp */; };
+		BF7293C919D464AA0007C9B0 /* Dap_SIMD_Vector_avx64x4.hpp in Headers */ = {isa = PBXBuildFile; fileRef = BF7293C219D464AA0007C9B0 /* Dap_SIMD_Vector_avx64x4.hpp */; };
+		BF7293CA19D464AA0007C9B0 /* Dap_SIMD_Vector_neon32x4.hpp in Headers */ = {isa = PBXBuildFile; fileRef = BF7293C319D464AA0007C9B0 /* Dap_SIMD_Vector_neon32x4.hpp */; };
+		BF7293CB19D464AA0007C9B0 /* Dap_SIMD_Vector_sse32x4.hpp in Headers */ = {isa = PBXBuildFile; fileRef = BF7293C419D464AA0007C9B0 /* Dap_SIMD_Vector_sse32x4.hpp */; };
+		BF7293CC19D464AA0007C9B0 /* Dap_SIMD_Vector_sse64x2.hpp in Headers */ = {isa = PBXBuildFile; fileRef = BF7293C519D464AA0007C9B0 /* Dap_SIMD_Vector_sse64x2.hpp */; };
+		BF7293CD19D464AA0007C9B0 /* Dap_SIMD_Vector.hpp in Headers */ = {isa = PBXBuildFile; fileRef = BF7293C619D464AA0007C9B0 /* Dap_SIMD_Vector.hpp */; };
+		BF7293CE19D464AA0007C9B0 /* Dap_SIMD.hpp in Headers */ = {isa = PBXBuildFile; fileRef = BF7293C719D464AA0007C9B0 /* Dap_SIMD.hpp */; };
+		BF7293D019D464B70007C9B0 /* Dap_SIMD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF7293CF19D464B70007C9B0 /* Dap_SIMD.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -37,21 +45,29 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		BF55C21219CA745B00F61FCA /* jdksdap.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = jdksdap.hpp; sourceTree = "<group>"; };
-		BF55C21319CA745B00F61FCA /* jdksdap_block.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = jdksdap_block.hpp; sourceTree = "<group>"; };
-		BF55C21419CA745B00F61FCA /* jdksdap_math.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = jdksdap_math.hpp; sourceTree = "<group>"; };
-		BF55C21519CA745B00F61FCA /* jdksdap_traits.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = jdksdap_traits.hpp; sourceTree = "<group>"; };
-		BF55C21619CA745B00F61FCA /* jdksdap_twist.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = jdksdap_twist.hpp; sourceTree = "<group>"; };
-		BF55C21719CA745B00F61FCA /* jdksdap_vec.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = jdksdap_vec.hpp; sourceTree = "<group>"; };
-		BF55C21819CA745B00F61FCA /* jdksdap_world.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = jdksdap_world.hpp; sourceTree = "<group>"; };
-		BF55C22119CA746300F61FCA /* jdksdap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jdksdap.cpp; sourceTree = "<group>"; };
-		BF55C22219CA746300F61FCA /* jdksdap_block.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jdksdap_block.cpp; sourceTree = "<group>"; };
-		BF55C22319CA746300F61FCA /* jdksdap_math.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jdksdap_math.cpp; sourceTree = "<group>"; };
-		BF55C22419CA746300F61FCA /* jdksdap_traits.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jdksdap_traits.cpp; sourceTree = "<group>"; };
-		BF55C22519CA746300F61FCA /* jdksdap_twist.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jdksdap_twist.cpp; sourceTree = "<group>"; };
-		BF55C22619CA746300F61FCA /* jdksdap_vec.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jdksdap_vec.cpp; sourceTree = "<group>"; };
-		BF55C22719CA746300F61FCA /* jdksdap_world.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jdksdap_world.cpp; sourceTree = "<group>"; };
+		BF55C21219CA745B00F61FCA /* Dap.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Dap.hpp; sourceTree = "<group>"; };
+		BF55C21319CA745B00F61FCA /* Dap_Block.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Dap_Block.hpp; sourceTree = "<group>"; };
+		BF55C21419CA745B00F61FCA /* Dap_Math.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Dap_Math.hpp; sourceTree = "<group>"; };
+		BF55C21519CA745B00F61FCA /* Dap_Traits.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Dap_Traits.hpp; sourceTree = "<group>"; };
+		BF55C21619CA745B00F61FCA /* Dap_Twist.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Dap_Twist.hpp; sourceTree = "<group>"; };
+		BF55C21719CA745B00F61FCA /* Dap_Vec.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Dap_Vec.hpp; sourceTree = "<group>"; };
+		BF55C21819CA745B00F61FCA /* Dap_world.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Dap_world.hpp; sourceTree = "<group>"; };
+		BF55C22119CA746300F61FCA /* Dap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Dap.cpp; sourceTree = "<group>"; };
+		BF55C22219CA746300F61FCA /* Dap_Block.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Dap_Block.cpp; sourceTree = "<group>"; };
+		BF55C22319CA746300F61FCA /* Dap_Math.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Dap_Math.cpp; sourceTree = "<group>"; };
+		BF55C22419CA746300F61FCA /* Dap_Traits.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Dap_Traits.cpp; sourceTree = "<group>"; };
+		BF55C22519CA746300F61FCA /* Dap_Twist.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Dap_Twist.cpp; sourceTree = "<group>"; };
+		BF55C22619CA746300F61FCA /* Dap_Vec.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Dap_Vec.cpp; sourceTree = "<group>"; };
+		BF55C22719CA746300F61FCA /* Dap_world.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Dap_world.cpp; sourceTree = "<group>"; };
 		BF55C23019CA747000F61FCA /* test_simple.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = test_simple.cpp; sourceTree = "<group>"; };
+		BF7293C119D464AA0007C9B0 /* Dap_SIMD_Vector_avx32x8.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Dap_SIMD_Vector_avx32x8.hpp; sourceTree = "<group>"; };
+		BF7293C219D464AA0007C9B0 /* Dap_SIMD_Vector_avx64x4.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Dap_SIMD_Vector_avx64x4.hpp; sourceTree = "<group>"; };
+		BF7293C319D464AA0007C9B0 /* Dap_SIMD_Vector_neon32x4.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Dap_SIMD_Vector_neon32x4.hpp; sourceTree = "<group>"; };
+		BF7293C419D464AA0007C9B0 /* Dap_SIMD_Vector_sse32x4.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Dap_SIMD_Vector_sse32x4.hpp; sourceTree = "<group>"; };
+		BF7293C519D464AA0007C9B0 /* Dap_SIMD_Vector_sse64x2.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Dap_SIMD_Vector_sse64x2.hpp; sourceTree = "<group>"; };
+		BF7293C619D464AA0007C9B0 /* Dap_SIMD_Vector.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Dap_SIMD_Vector.hpp; sourceTree = "<group>"; };
+		BF7293C719D464AA0007C9B0 /* Dap_SIMD.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Dap_SIMD.hpp; sourceTree = "<group>"; };
+		BF7293CF19D464B70007C9B0 /* Dap_SIMD.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Dap_SIMD.cpp; sourceTree = "<group>"; };
 		BF72D83119C8D6D500135025 /* libdap.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libdap.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF72D85B19C8D78F00135025 /* test_simple */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test_simple; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -77,13 +93,20 @@
 		BF55C21119CA745B00F61FCA /* include */ = {
 			isa = PBXGroup;
 			children = (
-				BF55C21219CA745B00F61FCA /* jdksdap.hpp */,
-				BF55C21319CA745B00F61FCA /* jdksdap_block.hpp */,
-				BF55C21419CA745B00F61FCA /* jdksdap_math.hpp */,
-				BF55C21519CA745B00F61FCA /* jdksdap_traits.hpp */,
-				BF55C21619CA745B00F61FCA /* jdksdap_twist.hpp */,
-				BF55C21719CA745B00F61FCA /* jdksdap_vec.hpp */,
-				BF55C21819CA745B00F61FCA /* jdksdap_world.hpp */,
+				BF55C21319CA745B00F61FCA /* Dap_Block.hpp */,
+				BF55C21419CA745B00F61FCA /* Dap_Math.hpp */,
+				BF7293C119D464AA0007C9B0 /* Dap_SIMD_Vector_avx32x8.hpp */,
+				BF7293C219D464AA0007C9B0 /* Dap_SIMD_Vector_avx64x4.hpp */,
+				BF7293C319D464AA0007C9B0 /* Dap_SIMD_Vector_neon32x4.hpp */,
+				BF7293C419D464AA0007C9B0 /* Dap_SIMD_Vector_sse32x4.hpp */,
+				BF7293C519D464AA0007C9B0 /* Dap_SIMD_Vector_sse64x2.hpp */,
+				BF7293C619D464AA0007C9B0 /* Dap_SIMD_Vector.hpp */,
+				BF7293C719D464AA0007C9B0 /* Dap_SIMD.hpp */,
+				BF55C21519CA745B00F61FCA /* Dap_Traits.hpp */,
+				BF55C21619CA745B00F61FCA /* Dap_Twist.hpp */,
+				BF55C21719CA745B00F61FCA /* Dap_Vec.hpp */,
+				BF55C21819CA745B00F61FCA /* Dap_world.hpp */,
+				BF55C21219CA745B00F61FCA /* Dap.hpp */,
 			);
 			name = include;
 			path = ../../include;
@@ -92,13 +115,14 @@
 		BF55C22019CA746300F61FCA /* src */ = {
 			isa = PBXGroup;
 			children = (
-				BF55C22119CA746300F61FCA /* jdksdap.cpp */,
-				BF55C22219CA746300F61FCA /* jdksdap_block.cpp */,
-				BF55C22319CA746300F61FCA /* jdksdap_math.cpp */,
-				BF55C22419CA746300F61FCA /* jdksdap_traits.cpp */,
-				BF55C22519CA746300F61FCA /* jdksdap_twist.cpp */,
-				BF55C22619CA746300F61FCA /* jdksdap_vec.cpp */,
-				BF55C22719CA746300F61FCA /* jdksdap_world.cpp */,
+				BF55C22219CA746300F61FCA /* Dap_Block.cpp */,
+				BF55C22319CA746300F61FCA /* Dap_Math.cpp */,
+				BF7293CF19D464B70007C9B0 /* Dap_SIMD.cpp */,
+				BF55C22419CA746300F61FCA /* Dap_Traits.cpp */,
+				BF55C22519CA746300F61FCA /* Dap_Twist.cpp */,
+				BF55C22619CA746300F61FCA /* Dap_Vec.cpp */,
+				BF55C22719CA746300F61FCA /* Dap_world.cpp */,
+				BF55C22119CA746300F61FCA /* Dap.cpp */,
 			);
 			name = src;
 			path = ../../src;
@@ -139,13 +163,20 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BF55C21A19CA745B00F61FCA /* jdksdap_block.hpp in Headers */,
-				BF55C21B19CA745B00F61FCA /* jdksdap_math.hpp in Headers */,
-				BF55C21D19CA745B00F61FCA /* jdksdap_twist.hpp in Headers */,
-				BF55C21E19CA745B00F61FCA /* jdksdap_vec.hpp in Headers */,
-				BF55C21919CA745B00F61FCA /* jdksdap.hpp in Headers */,
-				BF55C21C19CA745B00F61FCA /* jdksdap_traits.hpp in Headers */,
-				BF55C21F19CA745B00F61FCA /* jdksdap_world.hpp in Headers */,
+				BF7293CB19D464AA0007C9B0 /* Dap_SIMD_Vector_sse32x4.hpp in Headers */,
+				BF55C21A19CA745B00F61FCA /* Dap_Block.hpp in Headers */,
+				BF55C21B19CA745B00F61FCA /* Dap_Math.hpp in Headers */,
+				BF7293CE19D464AA0007C9B0 /* Dap_SIMD.hpp in Headers */,
+				BF55C21D19CA745B00F61FCA /* Dap_Twist.hpp in Headers */,
+				BF55C21E19CA745B00F61FCA /* Dap_Vec.hpp in Headers */,
+				BF7293C919D464AA0007C9B0 /* Dap_SIMD_Vector_avx64x4.hpp in Headers */,
+				BF7293CC19D464AA0007C9B0 /* Dap_SIMD_Vector_sse64x2.hpp in Headers */,
+				BF55C21919CA745B00F61FCA /* Dap.hpp in Headers */,
+				BF7293CA19D464AA0007C9B0 /* Dap_SIMD_Vector_neon32x4.hpp in Headers */,
+				BF7293CD19D464AA0007C9B0 /* Dap_SIMD_Vector.hpp in Headers */,
+				BF55C21C19CA745B00F61FCA /* Dap_Traits.hpp in Headers */,
+				BF55C21F19CA745B00F61FCA /* Dap_world.hpp in Headers */,
+				BF7293C819D464AA0007C9B0 /* Dap_SIMD_Vector_avx32x8.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -226,13 +257,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BF55C22D19CA746300F61FCA /* jdksdap_vec.cpp in Sources */,
-				BF55C22A19CA746300F61FCA /* jdksdap_math.cpp in Sources */,
-				BF55C22819CA746300F61FCA /* jdksdap.cpp in Sources */,
-				BF55C22C19CA746300F61FCA /* jdksdap_twist.cpp in Sources */,
-				BF55C22E19CA746300F61FCA /* jdksdap_world.cpp in Sources */,
-				BF55C22B19CA746300F61FCA /* jdksdap_traits.cpp in Sources */,
-				BF55C22919CA746300F61FCA /* jdksdap_block.cpp in Sources */,
+				BF55C22D19CA746300F61FCA /* Dap_Vec.cpp in Sources */,
+				BF55C22A19CA746300F61FCA /* Dap_Math.cpp in Sources */,
+				BF55C22819CA746300F61FCA /* Dap.cpp in Sources */,
+				BF55C22C19CA746300F61FCA /* Dap_Twist.cpp in Sources */,
+				BF55C22E19CA746300F61FCA /* Dap_world.cpp in Sources */,
+				BF55C22B19CA746300F61FCA /* Dap_Traits.cpp in Sources */,
+				BF7293D019D464B70007C9B0 /* Dap_SIMD.cpp in Sources */,
+				BF55C22919CA746300F61FCA /* Dap_Block.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

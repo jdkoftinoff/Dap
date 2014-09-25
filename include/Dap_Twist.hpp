@@ -30,17 +30,17 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "jdksdap_world.hpp"
+#include "Dap_world.hpp"
 #include <array>
 
-namespace JDKSDap
+namespace Dap
 {
 
 template <std::size_t WidthIndex, std::size_t HeightIndex, std::size_t DepthIndex>
-struct twist
+struct Twist
 {
     /// the self referring twist type for SFINAI
-    using twist_type = twist<WidthIndex, HeightIndex, DepthIndex>;
+    using twist_type = Twist<WidthIndex, HeightIndex, DepthIndex>;
 
     /// The raw index of the width parameter
     static const std::size_t width_index = WidthIndex;
@@ -117,56 +117,56 @@ struct twister
 template <typename InputTwist>
 struct twister<InputTwist, 0>
 {
-    using input_twist = twist<InputTwist::width_index, InputTwist::height_index, InputTwist::depth_index>;
-    using output_twist = twist<InputTwist::width_index, InputTwist::height_index, InputTwist::depth_index>;
+    using input_twist = Twist<InputTwist::width_index, InputTwist::height_index, InputTwist::depth_index>;
+    using output_twist = Twist<InputTwist::width_index, InputTwist::height_index, InputTwist::depth_index>;
 };
 
-using twist0 = typename twister<twist<0, 1, 2>, 0>::output_twist;
+using twist0 = typename twister<Twist<0, 1, 2>, 0>::output_twist;
 
 template <typename InputTwist>
 struct twister<InputTwist, 1>
 {
-    using input_twist = twist<InputTwist::width_index, InputTwist::height_index, InputTwist::depth_index>;
-    using output_twist = twist<InputTwist::height_index, InputTwist::width_index, InputTwist::depth_index>;
+    using input_twist = Twist<InputTwist::width_index, InputTwist::height_index, InputTwist::depth_index>;
+    using output_twist = Twist<InputTwist::height_index, InputTwist::width_index, InputTwist::depth_index>;
 };
 
-using twist1 = typename twister<twist<0, 1, 2>, 1>::output_twist;
+using twist1 = typename twister<Twist<0, 1, 2>, 1>::output_twist;
 
 template <typename InputTwist>
 struct twister<InputTwist, 2>
 {
-    using input_twist = twist<InputTwist::width_index, InputTwist::height_index, InputTwist::depth_index>;
-    using output_twist = twist<InputTwist::height_index, InputTwist::depth_index, InputTwist::width_index>;
+    using input_twist = Twist<InputTwist::width_index, InputTwist::height_index, InputTwist::depth_index>;
+    using output_twist = Twist<InputTwist::height_index, InputTwist::depth_index, InputTwist::width_index>;
 };
 
-using twist2 = typename twister<twist<0, 1, 2>, 2>::output_twist;
+using twist2 = typename twister<Twist<0, 1, 2>, 2>::output_twist;
 
 template <typename InputTwist>
 struct twister<InputTwist, 3>
 {
-    using input_twist = twist<InputTwist::width_index, InputTwist::height_index, InputTwist::depth_index>;
-    using output_twist = twist<InputTwist::depth_index, InputTwist::height_index, InputTwist::width_index>;
+    using input_twist = Twist<InputTwist::width_index, InputTwist::height_index, InputTwist::depth_index>;
+    using output_twist = Twist<InputTwist::depth_index, InputTwist::height_index, InputTwist::width_index>;
 };
 
-using twist3 = typename twister<twist<0, 1, 2>, 3>::output_twist;
+using twist3 = typename twister<Twist<0, 1, 2>, 3>::output_twist;
 
 template <typename InputTwist>
 struct twister<InputTwist, 4>
 {
-    using input_twist = twist<InputTwist::width_index, InputTwist::height_index, InputTwist::depth_index>;
-    using output_twist = twist<InputTwist::depth_index, InputTwist::width_index, InputTwist::height_index>;
+    using input_twist = Twist<InputTwist::width_index, InputTwist::height_index, InputTwist::depth_index>;
+    using output_twist = Twist<InputTwist::depth_index, InputTwist::width_index, InputTwist::height_index>;
 };
 
-using twist4 = typename twister<twist<0, 1, 2>, 4>::output_twist;
+using twist4 = typename twister<Twist<0, 1, 2>, 4>::output_twist;
 
 template <typename InputTwist>
 struct twister<InputTwist, 5>
 {
-    using input_twist = twist<InputTwist::width_index, InputTwist::height_index, InputTwist::depth_index>;
-    using output_twist = twist<InputTwist::width_index, InputTwist::depth_index, InputTwist::height_index>;
+    using input_twist = Twist<InputTwist::width_index, InputTwist::height_index, InputTwist::depth_index>;
+    using output_twist = Twist<InputTwist::width_index, InputTwist::depth_index, InputTwist::height_index>;
 };
 
-using twist5 = typename twister<twist<0, 1, 2>, 5>::output_twist;
+using twist5 = typename twister<Twist<0, 1, 2>, 5>::output_twist;
 
 template <typename T, typename TwistType, std::size_t Width, std::size_t Height = 1, std::size_t Depth = 1>
 struct twist_array

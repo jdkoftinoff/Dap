@@ -30,20 +30,20 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "jdksdap_simd_vector.hpp"
+#include "Dap_SIMD_Vector.hpp"
 
 #if defined( __AVX__ )
 #include "immintrin.h"
 
-namespace jdksdap
+namespace Dap
 {
 
 template <>
-class JDKSDAP_SIMD_ALIGN SIMD_Vector<double, 4>
+class Dap_SIMD_ALIGN SIMD_Vector<float, 8>
 {
   public:
-    typedef SIMD_Vector<double, 4> simd_type;
-    typedef __m256d internal_type;
+    typedef SIMD_Vector<float, 8> simd_type;
+    typedef __m256 internal_type;
     typedef float value_type;
 
     typedef value_type *pointer;
@@ -57,7 +57,7 @@ class JDKSDAP_SIMD_ALIGN SIMD_Vector<double, 4>
 
     enum
     {
-        vector_size = 4
+        vector_size = 8
     };
 
     union
@@ -72,12 +72,17 @@ class JDKSDAP_SIMD_ALIGN SIMD_Vector<double, 4>
     }
 
     /// The Initializer list constructor sets the values
-    SIMD_Vector( value_type p1, value_type p2, value_type p3, value_type p4 )
+    SIMD_Vector(
+        value_type p1, value_type p2, value_type p3, value_type p4, value_type p5, value_type p6, value_type p7, value_type p8 )
     {
         m_item[0] = p1;
         m_item[1] = p2;
         m_item[2] = p3;
         m_item[3] = p4;
+        m_item[4] = p5;
+        m_item[5] = p6;
+        m_item[6] = p7;
+        m_item[7] = p8;
     }
 
     /// Get the vector size

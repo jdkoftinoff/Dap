@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 Copyright (c) 2014, Jeff Koftinoff <jeffk@jdkoftinoff.com> and J.D. Koftinoff Software, Ltd.
 All rights reserved.
@@ -28,6 +30,5 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "jdksdap_world.hpp"
-
-const char *jdksdap_world_file = __FILE__;
+#include "Dap_world.hpp"
+#include "Dap_traits.hpp"

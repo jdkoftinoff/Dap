@@ -30,19 +30,19 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "jdksdap_world.hpp"
-#include "jdksdap_vec.hpp"
-#include "jdksdap_traits.hpp"
-#include "jdksdap_twist.hpp"
+#include "Dap_world.hpp"
+#include "Dap_vec.hpp"
+#include "Dap_traits.hpp"
+#include "Dap_twist.hpp"
 
-namespace JDKSDap
+namespace Dap
 {
 
 /**
  * 3 dimensional array block indexed by Width, Height, and Depth
  */
 template <typename T, typename TwistType, std::size_t Width, std::size_t Height = 1, std::size_t Depth = 1>
-struct block
+struct Block
 {
     using twist_type = TwistType;
     using value_type = T;
@@ -56,11 +56,11 @@ struct block
  * Traits for unrotated array block
  */
 template <typename T, typename TwistType, size_t Width, size_t Height, size_t Depth>
-struct traits<block<T, TwistType, Width, Height, Depth> >
+struct Traits<Block<T, TwistType, Width, Height, Depth> >
 {
     using value_type = T;
     using twist_type = TwistType;
-    using container_type = block<T, twist_type, Width, Height, Depth>;
+    using container_type = Block<T, twist_type, Width, Height, Depth>;
     using twist_array_type = typename container_type::twist_array_type;
     using array_type = typename container_type::array_type;
 
@@ -78,9 +78,9 @@ auto get( ContainerT &c,
           std::size_t width_pos = 0,
           std::size_t height_pos = 0,
           std::size_t depth_pos = 0,
-          typename traits<ContainerT>::twist_array_type * = 0 ) -> typename traits<ContainerT>::value_type &
+          typename Traits<ContainerT>::twist_array_type * = 0 ) -> typename Traits<ContainerT>::value_type &
 {
-    using twist_array_type = typename traits<ContainerT>::twist_array_type;
+    using twist_array_type = typename Traits<ContainerT>::twist_array_type;
     return twist_array_type::get( c.content, width_pos, height_pos, depth_pos );
 }
 
@@ -89,21 +89,21 @@ auto get( ContainerT const &c,
           std::size_t width_pos = 0,
           std::size_t height_pos = 0,
           std::size_t depth_pos = 0,
-          typename traits<ContainerT>::twist_array_type * = 0 ) -> typename traits<ContainerT>::value_type
+          typename Traits<ContainerT>::twist_array_type * = 0 ) -> typename Traits<ContainerT>::value_type
 {
-    using twist_array_type = typename traits<ContainerT>::twist_array_type;
+    using twist_array_type = typename Traits<ContainerT>::twist_array_type;
     return twist_array_type::get( c.content, width_pos, height_pos, depth_pos );
 }
 
 template <typename ContainerT>
 auto set( ContainerT &c,
-          typename traits<ContainerT>::value_type v,
+          typename Traits<ContainerT>::value_type v,
           std::size_t width_pos = 0,
           std::size_t height_pos = 0,
           std::size_t depth_pos = 0,
-          typename traits<ContainerT>::twist_array_type * = 0 ) -> void
+          typename Traits<ContainerT>::twist_array_type * = 0 ) -> void
 {
-    using twist_array_type = typename traits<ContainerT>::twist_array_type;
+    using twist_array_type = typename Traits<ContainerT>::twist_array_type;
     twist_array_type::set( c.content, v, width_pos, height_pos, depth_pos );
 }
 
@@ -112,9 +112,9 @@ auto rawget( ContainerT &c,
              std::size_t i0 = 0,
              std::size_t i1 = 0,
              std::size_t i2 = 0,
-             typename traits<ContainerT>::twist_array_type * = 0 ) -> typename traits<ContainerT>::value_type &
+             typename Traits<ContainerT>::twist_array_type * = 0 ) -> typename Traits<ContainerT>::value_type &
 {
-    using twist_array_type = typename traits<ContainerT>::twist_array_type;
+    using twist_array_type = typename Traits<ContainerT>::twist_array_type;
     return twist_array_type::rawget( c.content, i0, i1, i2 );
 }
 
@@ -123,28 +123,28 @@ auto rawget( ContainerT const &c,
              std::size_t i0 = 0,
              std::size_t i1 = 0,
              std::size_t i2 = 0,
-             typename traits<ContainerT>::twist_array_type * = 0 ) -> typename traits<ContainerT>::value_type &
+             typename Traits<ContainerT>::twist_array_type * = 0 ) -> typename Traits<ContainerT>::value_type &
 {
-    using twist_array_type = typename traits<ContainerT>::twist_array_type;
+    using twist_array_type = typename Traits<ContainerT>::twist_array_type;
     return twist_array_type::rawget( c.content, i0, i1, i2 );
 }
 
 template <typename ContainerT>
 auto rawset( ContainerT &c,
-             typename traits<ContainerT>::value_type v,
+             typename Traits<ContainerT>::value_type v,
              std::size_t i0 = 0,
              std::size_t i1 = 0,
              std::size_t i2 = 0,
-             typename traits<ContainerT>::twist_array_type * = 0 ) -> void
+             typename Traits<ContainerT>::twist_array_type * = 0 ) -> void
 {
-    using twist_array_type = typename traits<ContainerT>::twist_array_type;
+    using twist_array_type = typename Traits<ContainerT>::twist_array_type;
     twist_array_type::rawset( c.content, v, i0, i1, i2 );
 }
 
 template <typename ContainerT, typename Functor>
-void apply( ContainerT &srcdest, Functor f, typename traits<ContainerT>::twist_array_type * = 0 )
+void apply( ContainerT &srcdest, Functor f, typename Traits<ContainerT>::twist_array_type * = 0 )
 {
-    using ContainerTraits = traits<ContainerT>;
+    using ContainerTraits = Traits<ContainerT>;
     using ContainerTwistType = typename ContainerTraits::twist_type;
     using ValueType = typename ContainerTraits::value_type;
 
@@ -170,11 +170,11 @@ template <typename SourceContainerT, typename DestinationContainerT, typename Fu
 auto apply( SourceContainerT const &src,
             DestinationContainerT &dest,
             Functor f,
-            typename traits<SourceContainerT>::twist_array_type * = 0,
-            typename traits<DestinationContainerT>::twist_array_type * = 0 ) -> void
+            typename Traits<SourceContainerT>::twist_array_type * = 0,
+            typename Traits<DestinationContainerT>::twist_array_type * = 0 ) -> void
 {
-    using SourceContainerTraits = traits<SourceContainerT>;
-    using DestinationContainerTraits = traits<DestinationContainerT>;
+    using SourceContainerTraits = Traits<SourceContainerT>;
+    using DestinationContainerTraits = Traits<DestinationContainerT>;
     using DestinationContainerTwistType = typename DestinationContainerTraits::twist_type;
     using SourceValueType = typename SourceContainerTraits::value_type;
     using DestinationValueType = typename DestinationContainerTraits::value_type;
@@ -209,13 +209,13 @@ auto apply( Container1T const &c1,
             Container2T const &c2,
             ResultContainerT &r,
             Functor f,
-            typename traits<Container1T>::twist_array_type * = 0,
-            typename traits<Container2T>::twist_array_type * = 0,
-            typename traits<ResultContainerT>::twist_array_type * = 0 ) -> void
+            typename Traits<Container1T>::twist_array_type * = 0,
+            typename Traits<Container2T>::twist_array_type * = 0,
+            typename Traits<ResultContainerT>::twist_array_type * = 0 ) -> void
 {
-    using Container1Traits = traits<Container1T>;
-    using Container2Traits = traits<Container2T>;
-    using ResultContainerTraits = traits<ResultContainerT>;
+    using Container1Traits = Traits<Container1T>;
+    using Container2Traits = Traits<Container2T>;
+    using ResultContainerTraits = Traits<ResultContainerT>;
     using ResultContainerTwistType = typename ResultContainerTraits::twist_type;
     using ValueType1 = typename Container1Traits::value_type;
     using ValueType2 = typename Container2Traits::value_type;
@@ -244,10 +244,10 @@ auto apply( Container1T const &c1,
 }
 
 template <typename TwistType, std::size_t Width, std::size_t Height, std::size_t Depth, typename T>
-auto make_block( T elem ) -> block<T, TwistType, Width, Height, Depth>
+auto make_block( T elem ) -> Block<T, TwistType, Width, Height, Depth>
 {
-    using Container = block<T, TwistType, Width, Height, Depth>;
-    using ContainerTraits = traits<Container>;
+    using Container = Block<T, TwistType, Width, Height, Depth>;
+    using ContainerTraits = Traits<Container>;
     Container r;
 
     for ( std::size_t a = 0; a < ContainerTraits::raw_index0_size; ++a )
@@ -265,10 +265,10 @@ auto make_block( T elem ) -> block<T, TwistType, Width, Height, Depth>
 }
 
 template <typename T, typename TwistType, std::size_t Width, std::size_t Height, std::size_t Depth, typename Functor>
-auto fill_block( Functor f ) -> block<T, TwistType, Width, Height, Depth>
+auto fill_block( Functor f ) -> Block<T, TwistType, Width, Height, Depth>
 {
-    using Container = block<T, TwistType, Width, Height, Depth>;
-    using ContainerTraits = traits<Container>;
+    using Container = Block<T, TwistType, Width, Height, Depth>;
+    using ContainerTraits = Traits<Container>;
     using ContainerTwistType = typename Container::twist_type;
     Container r;
 
@@ -293,20 +293,20 @@ auto fill_block( Functor f ) -> block<T, TwistType, Width, Height, Depth>
 
 template <int TwistAmount, typename InputContainerType>
 auto twist_block( InputContainerType const &input )
-    -> block<typename traits<InputContainerType>::value_type,
+    -> Block<typename Traits<InputContainerType>::value_type,
              typename twister<typename InputContainerType::twist_type, TwistAmount>::output_twist,
-             traits<InputContainerType>::width,
-             traits<InputContainerType>::height,
-             traits<InputContainerType>::depth>
+             Traits<InputContainerType>::width,
+             Traits<InputContainerType>::height,
+             Traits<InputContainerType>::depth>
 {
     using InputContainerTwistType = typename InputContainerType::twist_type;
-    using InputContainerTraits = traits<InputContainerType>;
-    using OutputContainerType = block<typename traits<InputContainerType>::value_type,
+    using InputContainerTraits = Traits<InputContainerType>;
+    using OutputContainerType = Block<typename Traits<InputContainerType>::value_type,
                                       typename twister<typename InputContainerType::twist_type, TwistAmount>::output_twist,
                                       InputContainerTraits::width,
                                       InputContainerTraits::height,
                                       InputContainerTraits::depth>;
-    using OutputContainerTraits = traits<OutputContainerType>;
+    using OutputContainerTraits = Traits<OutputContainerType>;
     using OutputContainerTwistType = typename OutputContainerType::twist_type;
 
     OutputContainerType r;

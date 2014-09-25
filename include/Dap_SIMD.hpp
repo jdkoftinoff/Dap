@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 Copyright (c) 2014, Jeff Koftinoff <jeffk@jdkoftinoff.com> and J.D. Koftinoff Software, Ltd.
 All rights reserved.
@@ -28,7 +30,18 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "jdksdap_world.hpp"
-#include "jdksdap_traits.hpp"
+#include "Dap_SIMD_Vector.hpp"
 
-const char *jdksdap_traits_file = __FILE__;
+#if defined( __ARM_NEON__ )
+#include "Dap_SIMD_Vector_neon32x4.hpp"
+#endif
+
+#if defined( __SSE2__ )
+#include "Dap_SIMD_Vector_sse32x4.hpp"
+#include "Dap_SIMD_Vector_sse64x2.hpp"
+#endif
+
+#if defined( __AVX__ )
+#include "Dap_SIMD_Vector_avx32x8.hpp"
+#include "Dap_SIMD_Vector_avx64x4.hpp"
+#endif

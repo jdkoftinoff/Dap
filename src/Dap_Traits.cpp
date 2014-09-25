@@ -28,7 +28,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "jdksdap_world.hpp"
-#include "jdksdap.hpp"
+#include "Dap_world.hpp"
+#include "Dap_traits.hpp"
 
-const char *jdksdap_file = __FILE__;
+const char *Dap_traits_file = __FILE__;

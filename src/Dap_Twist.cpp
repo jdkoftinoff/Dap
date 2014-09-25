@@ -28,7 +28,7 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "jdksdap_world.hpp"
-#include "jdksdap_twist.hpp"
+#include "Dap_world.hpp"
+#include "Dap_twist.hpp"
 
-const char *jdksdap_twist_file = __FILE__;
+const char *Dap_twist_file = __FILE__;

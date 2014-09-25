@@ -1,5 +1,3 @@
-#pragma once
-
 /*
 Copyright (c) 2014, Jeff Koftinoff <jeffk@jdkoftinoff.com> and J.D. Koftinoff Software, Ltd.
 All rights reserved.
@@ -30,10 +28,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "jdksdap_world.hpp"
-#include "jdksdap_traits.hpp"
-#include "jdksdap_vec.hpp"
-#include "jdksdap_math.hpp"
-#include "jdksdap_block.hpp"
-#include "jdksdap_simd.hpp"
+#include "Dap_world.hpp"
+#include "Dap_math.hpp"
 
+const char *Dap_math_file = __FILE__;

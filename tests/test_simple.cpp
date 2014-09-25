@@ -28,13 +28,13 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "jdksdap_world.hpp"
-#include "jdksdap.hpp"
+#include "Dap_world.hpp"
+#include "Dap.hpp"
 #include <iostream>
 #include <iomanip>
 
 template <typename T, typename TwistType, size_t Width, size_t Height, size_t Depth>
-std::ostream &operator<<( std::ostream &ostr, JDKSDap::block<T, TwistType, Width, Height, Depth> const &v )
+std::ostream &operator<<( std::ostream &ostr, Dap::Block<T, TwistType, Width, Height, Depth> const &v )
 {
     ostr << "{\n";
     for ( size_t w = 0; w < Width; ++w )
@@ -45,7 +45,7 @@ std::ostream &operator<<( std::ostream &ostr, JDKSDap::block<T, TwistType, Width
             ostr << " {";
             for ( size_t d = 0; d < Depth; ++d )
             {
-                T a = JDKSDap::get( v, w, h, d );
+                T a = Dap::get( v, w, h, d );
                 std::cout << "(" << w << "," << h << "," << d << "):";
                 std::cout << std::setw( 4 ) << a << ( d < Depth - 1 ? ", " : " " );
             }
@@ -78,7 +78,7 @@ void dissect_twist( std::string const &name )
 
 int main()
 {
-    using namespace JDKSDap;
+    using namespace Dap;
 
     dissect_twist<twist0>( "twist0" );
     dissect_twist<twist1>( "twist1" );

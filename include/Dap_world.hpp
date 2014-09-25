@@ -48,6 +48,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <algorithm>
 #include <atomic>
 
-#ifndef JDKSDAP_CACHELINESIZE
-#define JDKSDAP_CACHELINESIZE ( 64 )
+#ifndef Dap_CACHELINESIZE
+#define Dap_CACHELINESIZE ( 64 )
 #endif
