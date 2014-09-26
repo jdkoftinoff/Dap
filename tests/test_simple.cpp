@@ -28,7 +28,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "Dap_world.hpp"
+#include "Dap_World.hpp"
 #include "Dap.hpp"
 #include <iostream>
 #include <iomanip>
@@ -46,7 +46,7 @@ std::ostream &operator<<( std::ostream &ostr, Dap::Block<T, TwistType, Width, He
             for ( size_t d = 0; d < Depth; ++d )
             {
                 T a = Dap::get( v, w, h, d );
-                std::cout << "(" << w << "," << h << "," << d << "):";
+                std::cout << "[" << w << "," << h << "," << d << "]:";
                 std::cout << std::setw( 4 ) << a << ( d < Depth - 1 ? ", " : " " );
             }
             std::cout << ( h < Height - 1 ? "}, " : "} " );
@@ -55,9 +55,9 @@ std::ostream &operator<<( std::ostream &ostr, Dap::Block<T, TwistType, Width, He
     }
     std::size_t num = Width * Height * Depth;
     T const *p = &v.content[0][0][0];
-    for ( std::size_t i = 0; i < num; ++i )
+    for ( std::size_t i = 0; i < num; ++i, ++p )
     {
-        std::cout << *++p << "\n";
+        std::cout << *p << "\n";
     }
     return ostr;
 }
@@ -72,8 +72,47 @@ void dissect_twist( std::string const &name )
     std::cout << "raw_index0_map: " << TwistType::raw_index0_map << "\n";
     std::cout << "raw_index1_map: " << TwistType::raw_index1_map << "\n";
     std::cout << "raw_index2_map: " << TwistType::raw_index2_map << "\n";
+    std::cout << "raw_index0 from 1,2,3: " << TwistType::raw_index0_from( std::make_tuple( 1, 2, 3 ) ) << "\n";
+    std::cout << "raw_index1 from 1,2,3: " << TwistType::raw_index1_from( std::make_tuple( 1, 2, 3 ) ) << "\n";
+    std::cout << "raw_index2 from 1,2,3: " << TwistType::raw_index2_from( std::make_tuple( 1, 2, 3 ) ) << "\n";
+    std::cout << "width from 1,2,3: " << TwistType::width_pos_from( std::make_tuple( 1, 2, 3 ) ) << "\n";
+    std::cout << "height from 1,2,3: " << TwistType::height_pos_from( std::make_tuple( 1, 2, 3 ) ) << "\n";
+    std::cout << "depth from 1,2,3: " << TwistType::depth_pos_from( std::make_tuple( 1, 2, 3 ) ) << "\n";
 
     std::cout << "\n";
+}
+
+template <typename T>
+void do_biquad( double freq, double q )
+{
+    using namespace Dap;
+    typedef T value_type;
+    BiQuad<value_type> filter;
+
+    for ( size_t i = 0; i < simd_size<value_type>(); ++i )
+    {
+        filter.coeffs.calculate_lowpass( i, Constants::recip_96k(), freq, q );
+    }
+
+    value_type zero;
+    splat( zero, 0.0 );
+
+    auto input_audio = make_block<twist0, 256, 1, 1>( zero );
+    auto output_audio = make_block<twist0, 256, 1, 1>( zero );
+
+    value_type one;
+    splat( one, 1.0 );
+    set( input_audio, one, 0 );
+
+    std::cout << filter.coeffs << std::endl;
+    std::cout << filter.state << std::endl;
+
+    for ( size_t w = 0; w < output_audio.width; ++w )
+    {
+        set( output_audio, filter( get( input_audio, w, 0, 0 ) ), w, 0, 0 );
+    }
+
+    std::cout << output_audio << std::endl;
 }
 
 int main()
@@ -87,13 +126,15 @@ int main()
     dissect_twist<twist4>( "twist4" );
     dissect_twist<twist5>( "twist5" );
 
-    SIMD_Vector<float,4> simd1;
-    splat( simd1, 123.0f );
-
-    auto vv4 = make_block<twist0, 4, 3, 2>( simd1 );
+    auto vv4 = make_block<twist0, 4, 3, 2>( Vec<float, 4>{123.0f, 124.0f, 125.0f, 126.0f} );
     std::cout << "vv4:\n" << vv4 << std::endl;
     auto v1 = make_block<twist0, 4, 3, 2>( 1.0f );
     std::cout << "v1:\n" << v1 << std::endl;
+
+    auto vv3 = make_block<twist0, 4, 3, 2>( Vec<float, 3>{0.1f, 0.2f, 0.3f} );
+    std::cout << "vv3:\n" << vv3 << std::endl;
+    auto v1a = make_block<twist0, 4, 3, 2>( 1.0f );
+    std::cout << "v1a:\n" << v1a << std::endl;
     auto v2 = make_block<twist0, 4, 3, 2>( 2.0f );
     std::cout << "v2:\n" << v2 << std::endl;
     auto v3 = make_block<twist0, 4, 3, 2>( 3.0f );
@@ -101,9 +142,40 @@ int main()
     auto v3_a2 = make_block<twist2, 4, 3, 2>( 3.0f );
     std::cout << "v3_a2:\n" << v3_a2 << std::endl;
 
-    auto v4_a0 = fill_block<float, twist0, 4, 3, 2>( []( size_t w, size_t h, size_t d )
-    { return w * 1 + h * 10 + d * 100; } );
-    std::cout << "v4_a0:\n" << v4_a0 << std::endl;
+    {
+        auto v4_a0 = fill_block<float, twist0, 1, 2, 4>( []( size_t w, size_t h, size_t d )
+        { return w * 1 + h * 10 + d * 100; } );
+        std::cout << "v4_a0 1,1,4:\n" << v4_a0 << std::endl;
+    }
+    {
+        auto v4_a0 = fill_block<float, twist0, 2, 4, 1>( []( size_t w, size_t h, size_t d )
+        { return w * 1 + h * 10 + d * 100; } );
+        std::cout << "v4_a0 1,4,1:\n" << v4_a0 << std::endl;
+    }
+    {
+        auto v4_a0 = fill_block<float, twist0, 4, 1, 2>( []( size_t w, size_t h, size_t d )
+        { return w * 1 + h * 10 + d * 100; } );
+        std::cout << "v4_a0 4,1,1:\n" << v4_a0 << std::endl;
+    }
+
+    {
+        auto v4_a1 = fill_block<float, twist1, 1, 2, 4>( []( size_t w, size_t h, size_t d )
+        { return w * 1 + h * 10 + d * 100; } );
+        std::cout << "v4_a1 1,1,4:\n" << v4_a1 << std::endl;
+    }
+    {
+        auto v4_a1 = fill_block<float, twist1, 2, 4, 1>( []( size_t w, size_t h, size_t d )
+        { return w * 1 + h * 10 + d * 100; } );
+        std::cout << "v4_a1 1,4,1:\n" << v4_a1 << std::endl;
+    }
+    {
+        auto v4_a1 = fill_block<float, twist1, 4, 1, 2>( []( size_t w, size_t h, size_t d )
+        { return w * 1 + h * 10 + d * 100; } );
+        std::cout << "v4_a1 4,1,1:\n" << v4_a1 << std::endl;
+    }
+
+    do_biquad<double>( 1e3, 1.0 );
+    do_biquad<Vec<float, 4> >( 1e3, 1.0 );
 
     auto v4_a1 = fill_block<float, twist1, 4, 3, 2>( []( size_t w, size_t h, size_t d )
     { return w * 1 + h * 10 + d * 100; } );
@@ -125,12 +197,12 @@ int main()
     { return w * 1 + h * 10 + d * 100; } );
     std::cout << "v4_a5:\n" << v4_a5 << std::endl;
 
-    auto rv4_0 = twist_block<0>( v4_a0 );
-    auto rv4_1 = twist_block<1>( v4_a0 );
-    auto rv4_2 = twist_block<2>( v4_a0 );
-    auto rv4_3 = twist_block<3>( v4_a0 );
-    auto rv4_4 = twist_block<4>( v4_a0 );
-    auto rv4_5 = twist_block<5>( v4_a0 );
+    auto rv4_0 = twist_block<0>( v4_a1 );
+    auto rv4_1 = twist_block<1>( v4_a1 );
+    auto rv4_2 = twist_block<2>( v4_a1 );
+    auto rv4_3 = twist_block<3>( v4_a1 );
+    auto rv4_4 = twist_block<4>( v4_a1 );
+    auto rv4_5 = twist_block<5>( v4_a1 );
     std::cout << "rv4_0:\n" << rv4_0 << std::endl;
     std::cout << "rv4_1:\n" << rv4_1 << std::endl;
     std::cout << "rv4_2:\n" << rv4_2 << std::endl;
@@ -138,16 +210,15 @@ int main()
     std::cout << "rv4_4:\n" << rv4_4 << std::endl;
     std::cout << "rv4_5:\n" << rv4_5 << std::endl;
 
-#if 0
-    for ( size_t w = 0; w < v1.width; ++w )
+    for ( size_t w = 0; w < v2.width; ++w )
     {
-        for ( size_t h = 0; h < v1.height; ++h )
+        for ( size_t h = 0; h < v2.height; ++h )
         {
-            for ( size_t d = 0; d < v1.depth; ++d )
+            for ( size_t d = 0; d < v2.depth; ++d )
             {
-                set( 0.0f, v1, w, h, d );
-                set( static_cast<float>( w * 1 + h * 10 + d * 1000 ), v2, w, h, d );
-                set( 0.0f, v3, w, h, d );
+                set( v2, 0.0f, w, h, d );
+                set( v2, static_cast<float>( w * 1 + h * 10 + d * 1000 ), w, h, d );
+                set( v3, 0.0f, w, h, d );
             }
         }
     }
@@ -161,31 +232,5 @@ int main()
         }
     }
 
-    auto rv2 = rotate( v2 );
-    std::cout << rv2 << std::endl;
-    {
-        float *p = &rawget( rv2 );
-        for ( size_t i = 0; i < 4 * 2 * 16; ++i )
-        {
-            std::cout << *p++ << std::endl;
-        }
-    }
-
-    apply( v2,
-           rv2,
-           v1,
-           []( float a, float b )
-    { return a + b + 1.0f; } );
-
-    std::cout << v1 << std::endl;
-#endif
-
-#if 0
-    apply_in_place( v1, [&](float ){ return c+=1.0f; } );
-    apply_in_place( v2, [](float ){ return 1.0f; } );
-    apply_in_place( v3, [](float ){ return 0.0f; } );
-    apply( v1, v3, [](float f){return f*100.0;});
-    apply_in_place( v3, [](float f){ std::cout << f << std::endl; return f; } );
-#endif
     return 0;
 }

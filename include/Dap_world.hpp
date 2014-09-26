@@ -48,6 +48,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <algorithm>
 #include <atomic>
 
-#ifndef Dap_CACHELINESIZE
-#define Dap_CACHELINESIZE ( 64 )
+#ifndef DAP_CACHELINESIZE
+#define DAP_CACHELINESIZE ( 64 )
 #endif
+
+#define DAP_CACHE_ALIGN alignas( DAP_CACHELINESIZE )

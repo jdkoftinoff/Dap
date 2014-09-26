@@ -7,20 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BF491FC819D509C6008F35B8 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = BF491FC719D509C6008F35B8 /* README.md */; };
+		BF491FCA19D50B43008F35B8 /* Dap_BiQuad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF491FC919D50B43008F35B8 /* Dap_BiQuad.cpp */; };
+		BF491FCC19D50B4E008F35B8 /* Dap_BiQuad.hpp in Headers */ = {isa = PBXBuildFile; fileRef = BF491FCB19D50B4E008F35B8 /* Dap_BiQuad.hpp */; };
+		BF491FCE19D51196008F35B8 /* Dap_World.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF491FCD19D51196008F35B8 /* Dap_World.cpp */; };
+		BF491FD019D511A2008F35B8 /* Dap_World.hpp in Headers */ = {isa = PBXBuildFile; fileRef = BF491FCF19D511A2008F35B8 /* Dap_World.hpp */; };
 		BF55C21919CA745B00F61FCA /* Dap.hpp in Headers */ = {isa = PBXBuildFile; fileRef = BF55C21219CA745B00F61FCA /* Dap.hpp */; };
 		BF55C21A19CA745B00F61FCA /* Dap_Block.hpp in Headers */ = {isa = PBXBuildFile; fileRef = BF55C21319CA745B00F61FCA /* Dap_Block.hpp */; };
 		BF55C21B19CA745B00F61FCA /* Dap_Math.hpp in Headers */ = {isa = PBXBuildFile; fileRef = BF55C21419CA745B00F61FCA /* Dap_Math.hpp */; };
 		BF55C21C19CA745B00F61FCA /* Dap_Traits.hpp in Headers */ = {isa = PBXBuildFile; fileRef = BF55C21519CA745B00F61FCA /* Dap_Traits.hpp */; };
 		BF55C21D19CA745B00F61FCA /* Dap_Twist.hpp in Headers */ = {isa = PBXBuildFile; fileRef = BF55C21619CA745B00F61FCA /* Dap_Twist.hpp */; };
 		BF55C21E19CA745B00F61FCA /* Dap_Vec.hpp in Headers */ = {isa = PBXBuildFile; fileRef = BF55C21719CA745B00F61FCA /* Dap_Vec.hpp */; };
-		BF55C21F19CA745B00F61FCA /* Dap_world.hpp in Headers */ = {isa = PBXBuildFile; fileRef = BF55C21819CA745B00F61FCA /* Dap_world.hpp */; };
 		BF55C22819CA746300F61FCA /* Dap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF55C22119CA746300F61FCA /* Dap.cpp */; };
 		BF55C22919CA746300F61FCA /* Dap_Block.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF55C22219CA746300F61FCA /* Dap_Block.cpp */; };
 		BF55C22A19CA746300F61FCA /* Dap_Math.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF55C22319CA746300F61FCA /* Dap_Math.cpp */; };
 		BF55C22B19CA746300F61FCA /* Dap_Traits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF55C22419CA746300F61FCA /* Dap_Traits.cpp */; };
 		BF55C22C19CA746300F61FCA /* Dap_Twist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF55C22519CA746300F61FCA /* Dap_Twist.cpp */; };
 		BF55C22D19CA746300F61FCA /* Dap_Vec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF55C22619CA746300F61FCA /* Dap_Vec.cpp */; };
-		BF55C22E19CA746300F61FCA /* Dap_world.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF55C22719CA746300F61FCA /* Dap_world.cpp */; };
 		BF55C23119CA747000F61FCA /* test_simple.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF55C23019CA747000F61FCA /* test_simple.cpp */; };
 		BF7293C819D464AA0007C9B0 /* Dap_SIMD_Vector_avx32x8.hpp in Headers */ = {isa = PBXBuildFile; fileRef = BF7293C119D464AA0007C9B0 /* Dap_SIMD_Vector_avx32x8.hpp */; };
 		BF7293C919D464AA0007C9B0 /* Dap_SIMD_Vector_avx64x4.hpp in Headers */ = {isa = PBXBuildFile; fileRef = BF7293C219D464AA0007C9B0 /* Dap_SIMD_Vector_avx64x4.hpp */; };
@@ -45,20 +48,23 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		BF491FC719D509C6008F35B8 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
+		BF491FC919D50B43008F35B8 /* Dap_BiQuad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Dap_BiQuad.cpp; sourceTree = "<group>"; };
+		BF491FCB19D50B4E008F35B8 /* Dap_BiQuad.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Dap_BiQuad.hpp; sourceTree = "<group>"; };
+		BF491FCD19D51196008F35B8 /* Dap_World.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Dap_World.cpp; sourceTree = "<group>"; };
+		BF491FCF19D511A2008F35B8 /* Dap_World.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Dap_World.hpp; sourceTree = "<group>"; };
 		BF55C21219CA745B00F61FCA /* Dap.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Dap.hpp; sourceTree = "<group>"; };
 		BF55C21319CA745B00F61FCA /* Dap_Block.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Dap_Block.hpp; sourceTree = "<group>"; };
 		BF55C21419CA745B00F61FCA /* Dap_Math.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Dap_Math.hpp; sourceTree = "<group>"; };
 		BF55C21519CA745B00F61FCA /* Dap_Traits.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Dap_Traits.hpp; sourceTree = "<group>"; };
 		BF55C21619CA745B00F61FCA /* Dap_Twist.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Dap_Twist.hpp; sourceTree = "<group>"; };
 		BF55C21719CA745B00F61FCA /* Dap_Vec.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Dap_Vec.hpp; sourceTree = "<group>"; };
-		BF55C21819CA745B00F61FCA /* Dap_world.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Dap_world.hpp; sourceTree = "<group>"; };
 		BF55C22119CA746300F61FCA /* Dap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Dap.cpp; sourceTree = "<group>"; };
 		BF55C22219CA746300F61FCA /* Dap_Block.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Dap_Block.cpp; sourceTree = "<group>"; };
 		BF55C22319CA746300F61FCA /* Dap_Math.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Dap_Math.cpp; sourceTree = "<group>"; };
 		BF55C22419CA746300F61FCA /* Dap_Traits.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Dap_Traits.cpp; sourceTree = "<group>"; };
 		BF55C22519CA746300F61FCA /* Dap_Twist.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Dap_Twist.cpp; sourceTree = "<group>"; };
 		BF55C22619CA746300F61FCA /* Dap_Vec.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Dap_Vec.cpp; sourceTree = "<group>"; };
-		BF55C22719CA746300F61FCA /* Dap_world.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Dap_world.cpp; sourceTree = "<group>"; };
 		BF55C23019CA747000F61FCA /* test_simple.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = test_simple.cpp; sourceTree = "<group>"; };
 		BF7293C119D464AA0007C9B0 /* Dap_SIMD_Vector_avx32x8.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Dap_SIMD_Vector_avx32x8.hpp; sourceTree = "<group>"; };
 		BF7293C219D464AA0007C9B0 /* Dap_SIMD_Vector_avx64x4.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Dap_SIMD_Vector_avx64x4.hpp; sourceTree = "<group>"; };
@@ -93,6 +99,7 @@
 		BF55C21119CA745B00F61FCA /* include */ = {
 			isa = PBXGroup;
 			children = (
+				BF491FCB19D50B4E008F35B8 /* Dap_BiQuad.hpp */,
 				BF55C21319CA745B00F61FCA /* Dap_Block.hpp */,
 				BF55C21419CA745B00F61FCA /* Dap_Math.hpp */,
 				BF7293C119D464AA0007C9B0 /* Dap_SIMD_Vector_avx32x8.hpp */,
@@ -105,7 +112,7 @@
 				BF55C21519CA745B00F61FCA /* Dap_Traits.hpp */,
 				BF55C21619CA745B00F61FCA /* Dap_Twist.hpp */,
 				BF55C21719CA745B00F61FCA /* Dap_Vec.hpp */,
-				BF55C21819CA745B00F61FCA /* Dap_world.hpp */,
+				BF491FCF19D511A2008F35B8 /* Dap_World.hpp */,
 				BF55C21219CA745B00F61FCA /* Dap.hpp */,
 			);
 			name = include;
@@ -115,13 +122,14 @@
 		BF55C22019CA746300F61FCA /* src */ = {
 			isa = PBXGroup;
 			children = (
+				BF491FC919D50B43008F35B8 /* Dap_BiQuad.cpp */,
 				BF55C22219CA746300F61FCA /* Dap_Block.cpp */,
 				BF55C22319CA746300F61FCA /* Dap_Math.cpp */,
 				BF7293CF19D464B70007C9B0 /* Dap_SIMD.cpp */,
 				BF55C22419CA746300F61FCA /* Dap_Traits.cpp */,
 				BF55C22519CA746300F61FCA /* Dap_Twist.cpp */,
 				BF55C22619CA746300F61FCA /* Dap_Vec.cpp */,
-				BF55C22719CA746300F61FCA /* Dap_world.cpp */,
+				BF491FCD19D51196008F35B8 /* Dap_World.cpp */,
 				BF55C22119CA746300F61FCA /* Dap.cpp */,
 			);
 			name = src;
@@ -140,6 +148,7 @@
 		BF72D82819C8D6D400135025 = {
 			isa = PBXGroup;
 			children = (
+				BF491FC719D509C6008F35B8 /* README.md */,
 				BF55C22F19CA747000F61FCA /* tests */,
 				BF55C22019CA746300F61FCA /* src */,
 				BF55C21119CA745B00F61FCA /* include */,
@@ -167,15 +176,16 @@
 				BF55C21A19CA745B00F61FCA /* Dap_Block.hpp in Headers */,
 				BF55C21B19CA745B00F61FCA /* Dap_Math.hpp in Headers */,
 				BF7293CE19D464AA0007C9B0 /* Dap_SIMD.hpp in Headers */,
+				BF491FCC19D50B4E008F35B8 /* Dap_BiQuad.hpp in Headers */,
 				BF55C21D19CA745B00F61FCA /* Dap_Twist.hpp in Headers */,
 				BF55C21E19CA745B00F61FCA /* Dap_Vec.hpp in Headers */,
 				BF7293C919D464AA0007C9B0 /* Dap_SIMD_Vector_avx64x4.hpp in Headers */,
 				BF7293CC19D464AA0007C9B0 /* Dap_SIMD_Vector_sse64x2.hpp in Headers */,
 				BF55C21919CA745B00F61FCA /* Dap.hpp in Headers */,
 				BF7293CA19D464AA0007C9B0 /* Dap_SIMD_Vector_neon32x4.hpp in Headers */,
+				BF491FD019D511A2008F35B8 /* Dap_World.hpp in Headers */,
 				BF7293CD19D464AA0007C9B0 /* Dap_SIMD_Vector.hpp in Headers */,
 				BF55C21C19CA745B00F61FCA /* Dap_Traits.hpp in Headers */,
-				BF55C21F19CA745B00F61FCA /* Dap_world.hpp in Headers */,
 				BF7293C819D464AA0007C9B0 /* Dap_SIMD_Vector_avx32x8.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -261,10 +271,12 @@
 				BF55C22A19CA746300F61FCA /* Dap_Math.cpp in Sources */,
 				BF55C22819CA746300F61FCA /* Dap.cpp in Sources */,
 				BF55C22C19CA746300F61FCA /* Dap_Twist.cpp in Sources */,
-				BF55C22E19CA746300F61FCA /* Dap_world.cpp in Sources */,
 				BF55C22B19CA746300F61FCA /* Dap_Traits.cpp in Sources */,
+				BF491FC819D509C6008F35B8 /* README.md in Sources */,
+				BF491FCE19D51196008F35B8 /* Dap_World.cpp in Sources */,
 				BF7293D019D464B70007C9B0 /* Dap_SIMD.cpp in Sources */,
 				BF55C22919CA746300F61FCA /* Dap_Block.cpp in Sources */,
+				BF491FCA19D50B43008F35B8 /* Dap_BiQuad.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

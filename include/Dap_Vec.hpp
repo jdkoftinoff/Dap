@@ -30,11 +30,11 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "Dap_world.hpp"
+#include "Dap_World.hpp"
 #include "Dap_SIMD.hpp"
 
 namespace Dap
 {
-    template <typename T, size_t N>
-    using Vec = SIMD_Vector<T,N>;
+template <typename T, size_t N>
+using Vec = SIMD_Vector<T, N>;
 }

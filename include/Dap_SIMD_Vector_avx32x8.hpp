@@ -39,7 +39,7 @@ namespace Dap
 {
 
 template <>
-class Dap_SIMD_ALIGN SIMD_Vector<float, 8>
+class DAP_SIMD_ALIGN SIMD_Vector<float, 8>
 {
   public:
     typedef SIMD_Vector<float, 8> simd_type;
@@ -55,10 +55,7 @@ class Dap_SIMD_ALIGN SIMD_Vector<float, 8>
     typedef std::size_t size_type;
     typedef std::ptrdiff_t difference_type;
 
-    enum
-    {
-        vector_size = 8
-    };
+    static const size_type vector_size = 8;
 
     union
     {

@@ -29,6 +29,6 @@
  */
 
 #include "Dap_World.hpp"
-#include "Dap_Twist.hpp"
+#include "Dap_BiQuad.hpp"
 
-const char *Dap_twist_file = __FILE__;
+const char *Dap_biquad_file = __FILE__;

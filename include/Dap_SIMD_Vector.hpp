@@ -30,19 +30,19 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "Dap_world.hpp"
+#include "Dap_World.hpp"
 
-#define Dap_SIMD_ALIGN alignas( 32 )
+#define DAP_SIMD_ALIGN alignas( 32 )
 
 namespace Dap
 {
 
 template <typename T, size_t N>
-class Dap_SIMD_ALIGN SIMD_Vector;
+class DAP_SIMD_ALIGN SIMD_Vector;
 template <typename T, size_t N>
-class Dap_SIMD_ALIGN SIMD_VectorRef;
+class DAP_SIMD_ALIGN SIMD_VectorRef;
 template <typename T, size_t N>
-class Dap_SIMD_ALIGN SIMD_VectorConstRef;
+class DAP_SIMD_ALIGN SIMD_VectorConstRef;
 
 /** \addtogroup simd_splat splat */
 /**@{*/
@@ -299,14 +299,14 @@ using std::sin;
 using std::cos;
 
 template <typename T, size_t N>
-class Dap_SIMD_ALIGN SIMD_Vector
+class DAP_SIMD_ALIGN SIMD_Vector
 {
   public:
     /// The type of the vector
-    typedef SIMD_Vector<T, N> simd_type;
+    using simd_type = SIMD_Vector<T, N>;
 
     /// The type that the vector contains
-    typedef T value_type;
+    using value_type = T;
 
     typedef value_type *pointer;
     typedef value_type const *const_pointer;
@@ -317,11 +317,7 @@ class Dap_SIMD_ALIGN SIMD_Vector
     typedef std::size_t size_type;
     typedef std::ptrdiff_t difference_type;
 
-    enum
-    {
-        /// The static size of the vector
-        vector_size = N
-    };
+    static const size_type vector_size = N;
 
     /// The items of the vector
     value_type m_item[vector_size];
@@ -830,7 +826,7 @@ class Dap_SIMD_ALIGN SIMD_Vector
 };
 
 template <typename T, size_t N>
-class Dap_SIMD_ALIGN SIMD_VectorRef
+class DAP_SIMD_ALIGN SIMD_VectorRef
 {
   public:
     /// The type of the vector
@@ -1342,7 +1338,7 @@ class Dap_SIMD_ALIGN SIMD_VectorRef
 };
 
 template <typename T, size_t N>
-class Dap_SIMD_ALIGN SIMD_VectorConstRef
+class DAP_SIMD_ALIGN SIMD_VectorConstRef
 {
   public:
     /// The type of the vector
@@ -1925,7 +1921,7 @@ typename std::enable_if<is_simd<SimdT>::value, SimdT>::type &apply( SimdT &r, Fu
 
 /**@{*/
 
-/// get_item free function, get const reference item 0 from non-vector v
+/// get free function, get const reference item 0 from non-vector v
 template <typename T, typename std::enable_if<!is_simd<T>::value, bool>::type sfinae = true>
 T const &get_item( T const &v, size_t x = 0 )
 {
@@ -1933,28 +1929,28 @@ T const &get_item( T const &v, size_t x = 0 )
     return v;
 }
 
-/// get_item free function, get const reference item x from vector v
+/// get free function, get const reference item x from vector v
 template <typename T, typename std::enable_if<is_simd<T>::value, bool>::type sfinae = true>
 typename T::value_type const &get_item( T const &v, size_t x )
 {
     return v[x];
 }
 
-/// get_item free function, get const reference item x,y from vector v
+/// get free function, get const reference item x,y from vector v
 template <typename T, typename std::enable_if<is_simd<T>::value, bool>::type sfinae = true>
 typename T::value_type const &get_item( T const &v, size_t x, size_t y )
 {
     return get_item( v[x], y );
 }
 
-/// get_item free function, get const reference item x,y,z from vector v
+/// get free function, get const reference item x,y,z from vector v
 template <typename T, typename std::enable_if<is_simd<T>::value, bool>::type sfinae = true>
 typename T::value_type const &get_item( T const &v, size_t x, size_t y, size_t z )
 {
     return get_item( v[x], y, z );
 }
 
-/// get_item free function, get reference item 0 from non-vector v
+/// get free function, get reference item 0 from non-vector v
 template <typename T, typename std::enable_if<!is_simd<T>::value, bool>::type sfinae = true>
 T &get_item( T &v, size_t x = 0 )
 {
@@ -1962,23 +1958,23 @@ T &get_item( T &v, size_t x = 0 )
     return v;
 }
 
-/// get_item free function, get reference item x from vector v
+/// get free function, get reference item x from vector v
 template <typename T, typename std::enable_if<is_simd<T>::value, bool>::type sfinae = true>
-typename T::value_type &get_item( T &v, size_t x )
+typename T::value_type &get_item( T const &v, size_t x )
 {
     return v[x];
 }
 
-/// get_item free function, get reference item x,y from vector v
+/// get free function, get reference item x,y from vector v
 template <typename T, typename std::enable_if<is_simd<T>::value, bool>::type sfinae = true>
-typename T::value_type &get_item( T &v, size_t x, size_t y )
+typename T::value_type &get_item( T const &v, size_t x, size_t y )
 {
     return get_item( v[x], y );
 }
 
-/// get_item free function, get reference item x,y,z from vector v
+/// get free function, get reference item x,y,z from vector v
 template <typename T, typename std::enable_if<is_simd<T>::value, bool>::type sfinae = true>
-typename T::value_type &get_item( T &v, size_t x, size_t y, size_t z )
+typename T::value_type &get_item( T const &v, size_t x, size_t y, size_t z )
 {
     return get_item( v[x], y, z );
 }

@@ -28,7 +28,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "Dap_world.hpp"
-#include "Dap_block.hpp"
+#include "Dap_World.hpp"
+#include "Dap_Block.hpp"
 
 const char *Dap_block_file = __FILE__;

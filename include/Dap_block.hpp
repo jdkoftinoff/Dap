@@ -30,10 +30,10 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "Dap_world.hpp"
-#include "Dap_vec.hpp"
-#include "Dap_traits.hpp"
-#include "Dap_twist.hpp"
+#include "Dap_World.hpp"
+#include "Dap_Vec.hpp"
+#include "Dap_Traits.hpp"
+#include "Dap_Twist.hpp"
 
 namespace Dap
 {
@@ -48,6 +48,13 @@ struct Block
     using value_type = T;
     using twist_array_type = twist_array<value_type, twist_type, Width, Height, Depth>;
     using array_type = typename twist_array_type::type;
+    static const size_t width = Width;
+    static const size_t height = Height;
+    static const size_t depth = Depth;
+
+    static const size_t raw_index0_size = twist_array_type::raw_index0_size;
+    static const size_t raw_index1_size = twist_array_type::raw_index1_size;
+    static const size_t raw_index2_size = twist_array_type::raw_index2_size;
 
     array_type content;
 };
@@ -142,7 +149,7 @@ auto rawset( ContainerT &c,
 }
 
 template <typename ContainerT, typename Functor>
-void apply( ContainerT &srcdest, Functor f, typename Traits<ContainerT>::twist_array_type * = 0 )
+void apply_block( ContainerT &srcdest, Functor f, typename Traits<ContainerT>::twist_array_type * = 0 )
 {
     using ContainerTraits = Traits<ContainerT>;
     using ContainerTwistType = typename ContainerTraits::twist_type;
@@ -167,11 +174,11 @@ void apply( ContainerT &srcdest, Functor f, typename Traits<ContainerT>::twist_a
 }
 
 template <typename SourceContainerT, typename DestinationContainerT, typename Functor>
-auto apply( SourceContainerT const &src,
-            DestinationContainerT &dest,
-            Functor f,
-            typename Traits<SourceContainerT>::twist_array_type * = 0,
-            typename Traits<DestinationContainerT>::twist_array_type * = 0 ) -> void
+auto apply_block( SourceContainerT const &src,
+                  DestinationContainerT &dest,
+                  Functor f,
+                  typename Traits<SourceContainerT>::twist_array_type * = 0,
+                  typename Traits<DestinationContainerT>::twist_array_type * = 0 ) -> void
 {
     using SourceContainerTraits = Traits<SourceContainerT>;
     using DestinationContainerTraits = Traits<DestinationContainerT>;
@@ -205,13 +212,13 @@ auto apply( SourceContainerT const &src,
 }
 
 template <typename Container1T, typename Container2T, typename ResultContainerT, typename Functor>
-auto apply( Container1T const &c1,
-            Container2T const &c2,
-            ResultContainerT &r,
-            Functor f,
-            typename Traits<Container1T>::twist_array_type * = 0,
-            typename Traits<Container2T>::twist_array_type * = 0,
-            typename Traits<ResultContainerT>::twist_array_type * = 0 ) -> void
+auto apply_block( Container1T const &c1,
+                  Container2T const &c2,
+                  ResultContainerT &r,
+                  Functor f,
+                  typename Traits<Container1T>::twist_array_type * = 0,
+                  typename Traits<Container2T>::twist_array_type * = 0,
+                  typename Traits<ResultContainerT>::twist_array_type * = 0 ) -> void
 {
     using Container1Traits = Traits<Container1T>;
     using Container2Traits = Traits<Container2T>;
@@ -294,7 +301,7 @@ auto fill_block( Functor f ) -> Block<T, TwistType, Width, Height, Depth>
 template <int TwistAmount, typename InputContainerType>
 auto twist_block( InputContainerType const &input )
     -> Block<typename Traits<InputContainerType>::value_type,
-             typename twister<typename InputContainerType::twist_type, TwistAmount>::output_twist,
+             typename Twister<typename InputContainerType::twist_type, TwistAmount>::output_twist,
              Traits<InputContainerType>::width,
              Traits<InputContainerType>::height,
              Traits<InputContainerType>::depth>
@@ -302,7 +309,7 @@ auto twist_block( InputContainerType const &input )
     using InputContainerTwistType = typename InputContainerType::twist_type;
     using InputContainerTraits = Traits<InputContainerType>;
     using OutputContainerType = Block<typename Traits<InputContainerType>::value_type,
-                                      typename twister<typename InputContainerType::twist_type, TwistAmount>::output_twist,
+                                      typename Twister<typename InputContainerType::twist_type, TwistAmount>::output_twist,
                                       InputContainerTraits::width,
                                       InputContainerTraits::height,
                                       InputContainerTraits::depth>;
