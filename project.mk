@@ -12,5 +12,6 @@ TOP_LIB_DIRS+=.
 CONFIG_TOOLS+=
 PKGCONFIG_PACKAGES+=
 
-CXXFLAGS+=-std=c++11 -stdlib=libc++
+CXXFLAGS_MACOSX+=-std=c++11 -stdlib=libc++
+CXXFLAGS_LINUX+=-std=c++11
 
