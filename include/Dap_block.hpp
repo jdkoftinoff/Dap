@@ -34,6 +34,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Dap_Vec.hpp"
 #include "Dap_Traits.hpp"
 #include "Dap_Twist.hpp"
+#include <iostream>
 
 namespace Dap
 {
@@ -155,11 +156,11 @@ void apply_block( ContainerT &srcdest, Functor f, typename Traits<ContainerT>::t
     using ContainerTwistType = typename ContainerTraits::twist_type;
     using ValueType = typename ContainerTraits::value_type;
 
-    for ( std::size_t a = 0; a < ContainerTraits::raw_index0_size; ++a )
+    for ( std::size_t c = 0; c < ContainerTraits::raw_index2_size; ++c )
     {
         for ( std::size_t b = 0; b < ContainerTraits::raw_index1_size; ++b )
         {
-            for ( std::size_t c = 0; c < ContainerTraits::raw_index2_size; ++c )
+            for ( std::size_t a = 0; a < ContainerTraits::raw_index0_size; ++a )
             {
                 auto pos = std::make_tuple( a, b, c );
                 std::size_t w = ContainerTwistType::width_pos_from( pos );
@@ -193,11 +194,11 @@ auto apply_block( SourceContainerT const &src,
     static_assert( SourceContainerTraits::depth == DestinationContainerTraits::depth,
                    "Depth different between Source and Destination" );
 
-    for ( std::size_t a = 0; a < DestinationContainerTraits::raw_index0_size; ++a )
+    for ( std::size_t c = 0; c < DestinationContainerTraits::raw_index2_size; ++c )
     {
         for ( std::size_t b = 0; b < DestinationContainerTraits::raw_index1_size; ++b )
         {
-            for ( std::size_t c = 0; c < DestinationContainerTraits::raw_index2_size; ++c )
+            for ( std::size_t a = 0; a < DestinationContainerTraits::raw_index0_size; ++a )
             {
                 auto pos = std::make_tuple( a, b, c );
                 std::size_t w = DestinationContainerTwistType::width_pos_from( pos );
@@ -232,11 +233,11 @@ auto apply_block( Container1T const &c1,
     static_assert( Container1Traits::height == Container2Traits::height, "Height different between Source and Destination" );
     static_assert( Container1Traits::depth == Container2Traits::depth, "Depth different between Source and Destination" );
 
-    for ( std::size_t a = 0; a < ResultContainerTraits::raw_index0_size; ++a )
+    for ( std::size_t c = 0; c < ResultContainerTraits::raw_index2_size; ++c )
     {
         for ( std::size_t b = 0; b < ResultContainerTraits::raw_index1_size; ++b )
         {
-            for ( std::size_t c = 0; c < ResultContainerTraits::raw_index2_size; ++c )
+            for ( std::size_t a = 0; a < ResultContainerTraits::raw_index0_size; ++a )
             {
                 auto pos = std::make_tuple( a, b, c );
                 std::size_t w = ResultContainerTwistType::width_pos_from( pos );
@@ -257,11 +258,11 @@ auto make_block( T elem ) -> Block<T, TwistType, Width, Height, Depth>
     using ContainerTraits = Traits<Container>;
     Container r;
 
-    for ( std::size_t a = 0; a < ContainerTraits::raw_index0_size; ++a )
+    for ( std::size_t c = 0; c < ContainerTraits::raw_index2_size; ++c )
     {
         for ( std::size_t b = 0; b < ContainerTraits::raw_index1_size; ++b )
         {
-            for ( std::size_t c = 0; c < ContainerTraits::raw_index2_size; ++c )
+            for ( std::size_t a = 0; a < ContainerTraits::raw_index0_size; ++a )
             {
                 rawset( r, elem, a, b, c );
             }
@@ -279,11 +280,11 @@ auto fill_block( Functor f ) -> Block<T, TwistType, Width, Height, Depth>
     using ContainerTwistType = typename Container::twist_type;
     Container r;
 
-    for ( std::size_t a = 0; a < ContainerTraits::raw_index0_size; ++a )
+    for ( std::size_t c = 0; c < ContainerTraits::raw_index2_size; ++c )
     {
         for ( std::size_t b = 0; b < ContainerTraits::raw_index1_size; ++b )
         {
-            for ( std::size_t c = 0; c < ContainerTraits::raw_index2_size; ++c )
+            for ( std::size_t a = 0; a < ContainerTraits::raw_index0_size; ++a )
             {
                 auto pos = std::make_tuple( a, b, c );
                 std::size_t w = ContainerTwistType::width_pos_from( pos );
@@ -318,11 +319,15 @@ auto twist_block( InputContainerType const &input )
 
     OutputContainerType r;
 
-    for ( std::size_t a = 0; a < OutputContainerTraits::raw_index0_size; ++a )
+    std::cout << "raw_i0_size: " << OutputContainerTraits::raw_index0_size << std::endl;
+    std::cout << "raw_i1_size: " << OutputContainerTraits::raw_index1_size << std::endl;
+    std::cout << "raw_i2_size: " << OutputContainerTraits::raw_index2_size << std::endl;
+    
+    for ( std::size_t c = 0; c < OutputContainerTraits::raw_index2_size; ++c )
     {
         for ( std::size_t b = 0; b < OutputContainerTraits::raw_index1_size; ++b )
         {
-            for ( std::size_t c = 0; c < OutputContainerTraits::raw_index2_size; ++c )
+            for ( std::size_t a = 0; a < OutputContainerTraits::raw_index0_size; ++a )
             {
                 auto pos = std::make_tuple( a, b, c );
                 std::size_t w = InputContainerTwistType::width_pos_from( pos );
