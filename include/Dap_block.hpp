@@ -105,7 +105,7 @@ auto get( ContainerT const &c,
 
 template <typename ContainerT>
 auto set( ContainerT &c,
-          typename Traits<ContainerT>::value_type v,
+          typename Traits<ContainerT>::value_type const &v,
           std::size_t width_pos = 0,
           std::size_t height_pos = 0,
           std::size_t depth_pos = 0,
@@ -139,7 +139,7 @@ auto rawget( ContainerT const &c,
 
 template <typename ContainerT>
 auto rawset( ContainerT &c,
-             typename Traits<ContainerT>::value_type v,
+             typename Traits<ContainerT>::value_type const &v,
              std::size_t i0 = 0,
              std::size_t i1 = 0,
              std::size_t i2 = 0,
@@ -252,7 +252,7 @@ auto apply_block( Container1T const &c1,
 }
 
 template <typename TwistType, std::size_t Width, std::size_t Height, std::size_t Depth, typename T>
-auto make_block( T elem ) -> Block<T, TwistType, Width, Height, Depth>
+auto make_block( T const &elem ) -> Block<T, TwistType, Width, Height, Depth>
 {
     using Container = Block<T, TwistType, Width, Height, Depth>;
     using ContainerTraits = Traits<Container>;
@@ -278,6 +278,7 @@ auto fill_block( Functor f ) -> Block<T, TwistType, Width, Height, Depth>
     using Container = Block<T, TwistType, Width, Height, Depth>;
     using ContainerTraits = Traits<Container>;
     using ContainerTwistType = typename Container::twist_type;
+    using value_type = ContainerTraits::value_type;
     Container r;
 
     for ( std::size_t c = 0; c < ContainerTraits::raw_index2_size; ++c )
@@ -291,7 +292,8 @@ auto fill_block( Functor f ) -> Block<T, TwistType, Width, Height, Depth>
                 std::size_t h = ContainerTwistType::height_pos_from( pos );
                 std::size_t d = ContainerTwistType::depth_pos_from( pos );
 
-                rawset( r, f( w, h, d ), a, b, c );
+                value_type v = f(w, h, d);
+                rawset( r, v, a, b, c );
             }
         }
     }

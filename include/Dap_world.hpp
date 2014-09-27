@@ -52,4 +52,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define DAP_CACHELINESIZE ( 64 )
 #endif
 
+#if defined(_MSC_VER)
+#define DAP_CACHE_ALIGN _declspec( align( DAP_CACHELINESIZE ) )
+#else
 #define DAP_CACHE_ALIGN alignas( DAP_CACHELINESIZE )
+#endif
+
+#if defined(_MSC_VER)
+#define constexpr
+#endif

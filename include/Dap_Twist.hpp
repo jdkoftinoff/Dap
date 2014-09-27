@@ -121,7 +121,7 @@ struct Twister<InputTwist, 0>
     using output_twist = Twist<InputTwist::width_index, InputTwist::height_index, InputTwist::depth_index>;
 };
 
-using twist0 = typename Twister<Twist<0, 1, 2>, 0>::output_twist;
+using twist0 = Twister<Twist<0, 1, 2>, 0>::output_twist;
 
 template <typename InputTwist>
 struct Twister<InputTwist, 1>
@@ -130,7 +130,7 @@ struct Twister<InputTwist, 1>
     using output_twist = Twist<InputTwist::height_index, InputTwist::width_index, InputTwist::depth_index>;
 };
 
-using twist1 = typename Twister<Twist<0, 1, 2>, 1>::output_twist;
+using twist1 = Twister<Twist<0, 1, 2>, 1>::output_twist;
 
 template <typename InputTwist>
 struct Twister<InputTwist, 2>
@@ -139,7 +139,7 @@ struct Twister<InputTwist, 2>
     using output_twist = Twist<InputTwist::height_index, InputTwist::depth_index, InputTwist::width_index>;
 };
 
-using twist2 = typename Twister<Twist<0, 1, 2>, 2>::output_twist;
+using twist2 = Twister<Twist<0, 1, 2>, 2>::output_twist;
 
 template <typename InputTwist>
 struct Twister<InputTwist, 3>
@@ -148,7 +148,7 @@ struct Twister<InputTwist, 3>
     using output_twist = Twist<InputTwist::depth_index, InputTwist::height_index, InputTwist::width_index>;
 };
 
-using twist3 = typename Twister<Twist<0, 1, 2>, 3>::output_twist;
+using twist3 = Twister<Twist<0, 1, 2>, 3>::output_twist;
 
 template <typename InputTwist>
 struct Twister<InputTwist, 4>
@@ -157,7 +157,7 @@ struct Twister<InputTwist, 4>
     using output_twist = Twist<InputTwist::depth_index, InputTwist::width_index, InputTwist::height_index>;
 };
 
-using twist4 = typename Twister<Twist<0, 1, 2>, 4>::output_twist;
+using twist4 = Twister<Twist<0, 1, 2>, 4>::output_twist;
 
 template <typename InputTwist>
 struct Twister<InputTwist, 5>
@@ -166,7 +166,7 @@ struct Twister<InputTwist, 5>
     using output_twist = Twist<InputTwist::width_index, InputTwist::depth_index, InputTwist::height_index>;
 };
 
-using twist5 = typename Twister<Twist<0, 1, 2>, 5>::output_twist;
+using twist5 = Twister<Twist<0, 1, 2>, 5>::output_twist;
 
 template <typename T, typename TwistType, std::size_t Width, std::size_t Height = 1, std::size_t Depth = 1>
 struct twist_array
@@ -193,7 +193,7 @@ struct twist_array
         return a[index0][index1][index2];
     }
 
-    static void rawset( type &a, value_type v, std::size_t index0, std::size_t index1, std::size_t index2 )
+    static void rawset( type &a, value_type const &v, std::size_t index0, std::size_t index1, std::size_t index2 )
     {
         a[index0][index1][index2] = v;
     }
@@ -205,7 +205,7 @@ struct twist_array
         std::size_t index1 = twist_type::height_pos_from( pos );
         std::size_t index2 = twist_type::depth_pos_from( pos );
 
-        return a[index0][index1][index2];
+        return a[index2][index1][index0];
     }
 
     static inline T get( type const &a, std::size_t width_pos, std::size_t height_pos, std::size_t depth_pos )
@@ -215,17 +215,17 @@ struct twist_array
         std::size_t index1 = twist_type::height_pos_from( pos );
         std::size_t index2 = twist_type::depth_pos_from( pos );
 
-        return a[index0][index1][index2];
+        return a[index2][index1][index0];
     }
 
-    static inline void set( type &a, value_type v, std::size_t width_pos, std::size_t height_pos, std::size_t depth_pos )
+    static inline void set( type &a, value_type const &v, std::size_t width_pos, std::size_t height_pos, std::size_t depth_pos )
     {
         auto pos = std::make_tuple( width_pos, height_pos, depth_pos );
         std::size_t index0 = twist_type::width_pos_from( pos );
         std::size_t index1 = twist_type::height_pos_from( pos );
         std::size_t index2 = twist_type::depth_pos_from( pos );
 
-        a[index0][index1][index2] = v;
+        a[index2][index1][index0] = v;
     }
 };
 }
