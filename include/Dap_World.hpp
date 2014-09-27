@@ -47,6 +47,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <iterator>
 #include <algorithm>
 #include <atomic>
+#include <iosfwd>
+#include <iostream>
 
 #ifndef DAP_CACHELINESIZE
 #define DAP_CACHELINESIZE ( 64 )
