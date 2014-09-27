@@ -143,58 +143,58 @@ int main()
     std::cout << "v3_a2:\n" << v3_a2 << std::endl;
 
     {
-        auto v4_a0 = fill_block<float, twist0, 1, 2, 4>( []( size_t w, size_t h, size_t d )
-        { return w * 1 + h * 10 + d * 100; } );
+        auto v4_a0 = fill_block<float, twist0, 1, 2, 4>([](size_t w, size_t h, size_t d) -> float
+        { return static_cast<float>(w * 1.0f + h * 10.0f + d * 100.0f); });
         std::cout << "v4_a0 1,1,4:\n" << v4_a0 << std::endl;
     }
     {
-        auto v4_a0 = fill_block<float, twist0, 2, 4, 1>( []( size_t w, size_t h, size_t d )
-        { return w * 1 + h * 10 + d * 100; } );
+        auto v4_a0 = fill_block<float, twist0, 2, 4, 1>([](size_t w, size_t h, size_t d) -> float
+        { return static_cast<float>(w * 1.0f + h * 10.0f + d * 100.0f); });
         std::cout << "v4_a0 1,4,1:\n" << v4_a0 << std::endl;
     }
     {
-        auto v4_a0 = fill_block<float, twist0, 4, 1, 2>( []( size_t w, size_t h, size_t d )
-        { return w * 1 + h * 10 + d * 100; } );
+        auto v4_a0 = fill_block<float, twist0, 4, 1, 2>([](size_t w, size_t h, size_t d) -> float
+        { return static_cast<float>(w * 1.0f + h * 10.0f + d * 100.0f); });
         std::cout << "v4_a0 4,1,1:\n" << v4_a0 << std::endl;
     }
 
     {
-        auto v4_a1 = fill_block<float, twist1, 1, 2, 4>( []( size_t w, size_t h, size_t d )
-        { return w * 1 + h * 10 + d * 100; } );
+        auto v4_a1 = fill_block<float, twist1, 1, 2, 4>([](size_t w, size_t h, size_t d) -> float
+        { return static_cast<float>(w * 1.0f + h * 10.0f + d * 100.0f); });
         std::cout << "v4_a1 1,1,4:\n" << v4_a1 << std::endl;
     }
     {
-        auto v4_a1 = fill_block<float, twist1, 2, 4, 1>( []( size_t w, size_t h, size_t d )
-        { return w * 1 + h * 10 + d * 100; } );
+        auto v4_a1 = fill_block<float, twist1, 2, 4, 1>([](size_t w, size_t h, size_t d) -> float
+        { return static_cast<float>(w * 1.0f + h * 10.0f + d * 100.0f); });
         std::cout << "v4_a1 1,4,1:\n" << v4_a1 << std::endl;
     }
     {
-        auto v4_a1 = fill_block<float, twist1, 4, 1, 2>( []( size_t w, size_t h, size_t d )
-        { return w * 1 + h * 10 + d * 100; } );
+        auto v4_a1 = fill_block<float, twist1, 4, 1, 2>([](size_t w, size_t h, size_t d) -> float
+        { return static_cast<float>(w * 1.0f + h * 10.0f + d * 100.0f); });
         std::cout << "v4_a1 4,1,1:\n" << v4_a1 << std::endl;
     }
 
     do_biquad<double>( 1e3, 1.0 );
     do_biquad<Vec<float, 4> >( 1e3, 1.0 );
 
-    auto v4_a1 = fill_block<float, twist1, 4, 3, 2>( []( size_t w, size_t h, size_t d )
-    { return w * 1 + h * 10 + d * 100; } );
+    auto v4_a1 = fill_block<float, twist1, 4, 3, 2>( []( size_t w, size_t h, size_t d ) -> float
+    { return static_cast<float>(w * 1.0f + h * 10.0f + d * 100.0f); });
     std::cout << "v4_a1:\n" << v4_a1 << std::endl;
 
-    auto v4_a2 = fill_block<float, twist2, 4, 3, 2>( []( size_t w, size_t h, size_t d )
-    { return w * 1 + h * 10 + d * 100; } );
+    auto v4_a2 = fill_block<float, twist2, 4, 3, 2>([](size_t w, size_t h, size_t d) -> float
+    { return static_cast<float>(w * 1.0f + h * 10.0f + d * 100.0f); });
     std::cout << "v4_a2:\n" << v4_a2 << std::endl;
 
-    auto v4_a3 = fill_block<float, twist3, 4, 3, 2>( []( size_t w, size_t h, size_t d )
-    { return w * 1 + h * 10 + d * 100; } );
+    auto v4_a3 = fill_block<float, twist3, 4, 3, 2>([](size_t w, size_t h, size_t d) -> float
+    { return static_cast<float>(w * 1.0f + h * 10.0f +d * 100.0f); });
     std::cout << "v4_a3:\n" << v4_a3 << std::endl;
 
-    auto v4_a4 = fill_block<float, twist4, 4, 3, 2>( []( size_t w, size_t h, size_t d )
-    { return w * 1 + h * 10 + d * 100; } );
+    auto v4_a4 = fill_block<float, twist4, 4, 3, 2>([](size_t w, size_t h, size_t d) -> float
+    { return static_cast<float>(w * 1.0f + h * 10.0f + d * 100.0f); });
     std::cout << "v4_a4:\n" << v4_a4 << std::endl;
 
-    auto v4_a5 = fill_block<float, twist5, 4, 3, 2>( []( size_t w, size_t h, size_t d )
-    { return w * 1 + h * 10 + d * 100; } );
+    auto v4_a5 = fill_block<float, twist5, 4, 3, 2>([](size_t w, size_t h, size_t d) -> float
+    { return static_cast<float>(w * 1.0f + h * 10.0f + d * 100.0f); });
     std::cout << "v4_a5:\n" << v4_a5 << std::endl;
 
     auto rv4_0 = twist_block<0>( v4_a1 );

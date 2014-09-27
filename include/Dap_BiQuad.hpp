@@ -247,7 +247,7 @@ struct BiQuad
         state = other.state;
     }
 
-    T operator()( T input_value )
+    T operator()( T const &input_value )
     {
         T output_value;
 

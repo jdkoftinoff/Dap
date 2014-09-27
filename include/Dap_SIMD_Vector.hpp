@@ -32,7 +32,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "Dap_World.hpp"
 
-#define DAP_SIMD_ALIGN alignas( 32 )
+#if defined(_MSC_VER)
+#define DAP_SIMD_ALIGN _declspec( align( 16 ) )
+#else
+#define DAP_SIMD_ALIGN alignas( 16 )
+#endif
 
 namespace Dap
 {
