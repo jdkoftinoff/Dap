@@ -34,7 +34,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Dap_Vec.hpp"
 #include "Dap_Traits.hpp"
 #include "Dap_Twist.hpp"
-#include <iostream>
 
 namespace Dap
 {
@@ -278,7 +277,7 @@ auto fill_block( Functor f ) -> Block<T, TwistType, Width, Height, Depth>
     using Container = Block<T, TwistType, Width, Height, Depth>;
     using ContainerTraits = Traits<Container>;
     using ContainerTwistType = typename Container::twist_type;
-    using value_type = ContainerTraits::value_type;
+    using value_type = typename ContainerTraits::value_type;
     Container r;
 
     for ( std::size_t c = 0; c < ContainerTraits::raw_index2_size; ++c )
